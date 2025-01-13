@@ -1,0 +1,25 @@
+[project]
+name = "dem-generalization"
+version = "1.0.0"
+description = "A Python project for DEM generalization using Line Integral Convolution."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "GPL-3.0"}
+keywords = ["DEM", "Line Integral Convolution", "terrain generalization"]
+dependencies = [
+    "numpy",
+    "rasterio",
+    "scipy",
+    "tqdm",
+]
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+files = ["src"]
+ignore_missing_imports = true

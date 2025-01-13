@@ -1,0 +1,50 @@
+# === Python ===
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Distribution / Packaging
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+
+# === Sphinx ===
+# Build output
+docs/build/*
+!docs/build/html/
+# Sphinx cache files
+docs/source/
+Makefile
+make.bat
+
+# === OS / IDE-specific files ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*.swp
+*.swo
+*~
+
+# IDEs
+.idea/
+.vscode/
+*.code-workspace
