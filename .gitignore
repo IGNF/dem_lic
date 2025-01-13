@@ -19,9 +19,6 @@ build/
 *.log
 
 # === Sphinx ===
-# Build output
-docs/build/*
-!docs/build/html/
 # Sphinx cache files
 docs/source/
 Makefile
