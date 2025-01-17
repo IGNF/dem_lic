@@ -19,8 +19,8 @@ from tqdm import tqdm
 from scipy.ndimage import gaussian_filter
 
 # intern imports
-from morphoDEM import calculate_maximal_curvature, fast_adaptive_gaussian_blur
-from morphoDEM import (
+from utils.morpho_dem import calculate_maximal_curvature, fast_adaptive_gaussian_blur
+from utils.morpho_dem import (
     initialize_flat_steep_grid,
     remove_small_flat_areas,
     calculate_relative_altitude,
@@ -548,25 +548,7 @@ if __name__ == "__main__":
     """Main script for processing a GeoTIFF file with Line Integral Convolution (LIC) and
     adaptive Gaussian blur techniques for terrain generalization.
 
-    Parameters
-    ----------
-    sigma_max : float
-        Maximum Gaussian blur kernel width for adaptive smoothing.
-    block_size : int
-        Size of the non-overlapping processing blocks (in pixels).
-    overlap : int
-        Overlapping margin (in pixels) between adjacent blocks.
-    slope_threshold : float
-        Threshold for distinguishing flat and steep areas based on slope.
-    input_folder : str
-        Path to the folder containing the input raster.
-    output_folder : str
-        Path to the folder where the output raster will be saved.
-    MNT_input_raster : str
-        File name of the input raster (Digital Elevation Model).
-    output_raster_LIC_extended_bloc : str
-        File name for the processed output raster.
-
+y
     Notes
     -----
     This script initializes parameters for the process and calls the `process_geotiff_with_overlap`
@@ -574,21 +556,10 @@ if __name__ == "__main__":
     saved in the specified folder.
     """
 
-    # Folder paths
-    input_folder = "../../QGIS/out/"
-    output_folder = "../../out_scripts_test_temp/"
 
-    # Input raster file
-    MNT_input_raster = "Zone_O1_Christophe_Oisans_2021_MNTLHD_reech2m_extrait.tif"
-
-    # Output raster file for the processed result
-    output_raster_LIC_extended_bloc = (
-        f"{MNT_input_raster[:-4]}_LIC_extended_complete_test5.tif"
-    )
-
-    # Full file paths
-    MNT_input_path = input_folder + MNT_input_raster
-    LIC_complete_output_path = output_folder + output_raster_LIC_extended_bloc
+    # File paths
+    MNT_input_path = ""
+    LIC_complete_output_path = ""
 
     # Call the processing function
     process_geotiff_with_overlap(
