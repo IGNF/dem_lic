@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "A Python project for DEM generalization using Line Integral Convolution."
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "GPL-3.0"}
+license = {text = "MIT"}
 keywords = ["DEM", "Line Integral Convolution", "terrain generalization"]
 dependencies = [
     "numpy",
