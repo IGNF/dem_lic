@@ -25,15 +25,14 @@ Installation
 ------------
 
 To install the package, clone the repository and install it in editable mode.
-HTTP method :
-.. code-block:: bash
+
+HTTP method ::
 
     git clone https://github.com/ESaint-Denis/dem_lic.git
     cd dem_lic
     pip install -e .
 
-SSH method :
-.. code-block:: bash
+SSH method ::
 
     git clone git@github.com:ESaint-Denis/dem_lic.git
     cd dem_lic
