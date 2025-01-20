@@ -10,7 +10,7 @@ https://doi.org/10.1080/15230406.2020.1833762"
 import os
 
 
-from utils.lic_extended import process_geotiff_with_overlap
+from dem_lic.utils.lic_extended import process_geotiff_with_overlap
 
 
 

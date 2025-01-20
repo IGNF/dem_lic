@@ -1,11 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "dem-generalization"
+name = "dem_lic"
 version = "1.0.0"
-description = "A Python project for DEM generalization using Line Integral Convolution."
-readme = "README.md"
-requires-python = ">=3.8"
+description = "A Python package for DEM generalization using Line Integral Convolution (LIC)."
+readme = "README.rst"
 license = {text = "MIT"}
-keywords = ["DEM", "Line Integral Convolution", "terrain generalization"]
+authors = [
+    {name = "Edmond SAINT DENIS", email = "edmond.saint-denis@ign.fr"}
+]
+keywords = ["DEM", "LIC", "terrain generalization"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.8"
 dependencies = [
     "numpy",
     "rasterio",
@@ -13,12 +25,8 @@ dependencies = [
     "tqdm",
 ]
 
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.black]
-line-length = 88
+[project.scripts]
+dem_lic = "dem_lic.cli:main"
 
 [tool.mypy]
 files = ["src"]

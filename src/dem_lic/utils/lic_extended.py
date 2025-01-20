@@ -19,8 +19,8 @@ from tqdm import tqdm
 from scipy.ndimage import gaussian_filter
 
 # intern imports
-from utils.morpho_dem import calculate_maximal_curvature, fast_adaptive_gaussian_blur
-from utils.morpho_dem import (
+from dem_lic.utils.morpho_dem import calculate_maximal_curvature, fast_adaptive_gaussian_blur
+from dem_lic.utils.morpho_dem import (
     initialize_flat_steep_grid,
     remove_small_flat_areas,
     calculate_relative_altitude,

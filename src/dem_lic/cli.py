@@ -13,18 +13,22 @@ import argparse
 import os
 
 
-from utils.lic_extended import process_geotiff_with_overlap
+from dem_lic.utils.lic_extended import process_geotiff_with_overlap
 
 
 def main():
     """Main function to parse command-line arguments, validate inputs, and call
     the `process_geotiff_with_overlap` function.
     """
-    # Set up argument parser
-    parser = argparse.ArgumentParser(
-        description="Processes a GeoTIFF file using Line Integral Convolution (LIC) "
-                    "and adaptive Gaussian blur techniques for terrain generalization."
+    description = (
+        "Processes a GeoTIFF file using Line Integral Convolution (LIC) "
+        "and adaptive Gaussian blur techniques for terrain generalization.\n\n"
+        "Examples:\n"
+        "  dem-lic input.tif output.tif --block_size 2000 --overlap 50\n"
+        "  dem-lic input.tif output.tif --n_iterations 10 --sigma_max 6.0\n"
     )
+    parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
+
 
     # Add arguments
     parser.add_argument("MNT_input_path", type=str, help="Path to the input GeoTIFF file (DEM).")
@@ -39,6 +43,7 @@ def main():
     parser.add_argument("--n_iterations", type=int, default=5, help="Number of LIC iterations. Default: 5.")
     parser.add_argument("--sigma_blur_maxcurv", type=float, default=3.0, help="Gaussian blur sigma for max curvature. Default: 3.0.")
     parser.add_argument("--k", type=float, default=2.5, help="Weighting factor for combining LIC results. Default: 2.5.")
+    parser.add_argument("--version", action="version", version="dem_lic 1.0.0")
 
     # Parse arguments
     args = parser.parse_args()
@@ -87,7 +92,8 @@ def main():
         k=args.k,
     )
 
-    print("Processing completed successfully.")
+    print(f"Processing completed successfully. Output saved to: {args.output_path}")
+
 
 if __name__ == "__main__":
     main()
