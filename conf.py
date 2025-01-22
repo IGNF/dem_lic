@@ -21,6 +21,7 @@ release = '1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',  # Pour supporter les docstrings au format NumPy/Google
+    "sphinx.ext.githubpages"
 ]
 
 templates_path = ['_templates']
