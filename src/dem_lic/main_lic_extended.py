@@ -120,35 +120,11 @@ def generalization(
 
 
 if __name__ == "__main__":
-    # MNT_input_path = ""
-    # LIC_complete_output_path = ""
-
-    # # Call the processing function
-    # generalization(
-    #     MNT_input_path,
-    #     LIC_complete_output_path,
-    # )
-
-
-    # Folder paths
-    input_folder = "../../../QGIS/out/"
-    output_folder = "../../../out_scripts_test_temp/"
-
-    # Input raster file
-    MNT_input_raster = "Zone_O1_Christophe_Oisans_2021_MNTLHD_reech2m_extrait.tif"
-
-    # Output raster file for the processed result
-    output_raster_LIC_extended_bloc = (
-        f"{MNT_input_raster[:-4]}_LIC_extended_complete_test5.tif"
-    )
-
-    # Full file paths
-    MNT_input_path = input_folder + MNT_input_raster
-    LIC_complete_output_path = output_folder + output_raster_LIC_extended_bloc
+    MNT_input_path = ""
+    LIC_complete_output_path = ""
 
     # Call the processing function
     generalization(
         MNT_input_path,
-        LIC_complete_output_path,
-        overlap=20
+        LIC_complete_output_path
     )

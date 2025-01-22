@@ -83,12 +83,6 @@ Development Notes
 
 The CLI is implemented in the `cli.py` module and serves as an entry point for the **dem_lic** package. It validates user inputs, parses command-line arguments, and calls the `process_geotiff_with_overlap` function from the `utils.lic_extended` module.
 
-For additional details on the processing algorithm, refer to the main documentation or the source code of `cli.py`.
+For additional details on the processing algorithm, refer to the code documentation or the source code of `cli.py`.
 
-Contact
--------
 
-For issues or questions regarding the CLI, please contact:
-
-- **Edmond Saint-Denis** (IGN)
-- Email: edmond.saint-denis@ign.fr
