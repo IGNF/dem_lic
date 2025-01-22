@@ -11,7 +11,7 @@ Full documentation is available at:
 
 .. code-block:: text
 
-    [Link to Sphinx Documentation - Coming Soon]
+    `https://esaint-denis.github.io/dem_lic/ <https://esaint-denis.github.io/dem_lic/>`_
 
 What does it do?
 ----------------
