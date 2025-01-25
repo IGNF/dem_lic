@@ -1,18 +1,14 @@
-User Manual
-===========
+# User Manual
 
 This user manual provides detailed guidance on using the key functions of the **dem_lic** package. These functions enable users to generalize Digital Elevation Models (DEMs), compute curvature rasters, and apply advanced smoothing techniques. Below, you will find descriptions, usage instructions, and examples for each function.
 
-Introduction
-------------
+## Introduction
 
 The **dem_lic** package offers tools for DEM generalization and processing. The main entry point is the `generalization` function in `main_lic_extended`, which orchestrates the generalization pipeline. Additionally, standalone functions in the `morpho_dem` module allow users to perform specific tasks such as computing maximal curvature or applying selective Gaussian blur.
 
-Functions Overview
-------------------
+## Functions Overview
 
-Generalization Function
-***********************
+### Generalization Function
 
 **`main_lic_extended.generalization`**
 
@@ -28,19 +24,18 @@ The main entry point for DEM generalization. This function validates inputs, set
 
 **Example:**
 
-.. code-block:: python
+```python
+from dem_lic.main_lic_extended import generalization
 
-    from dem_lic.main_lic_extended import generalization
+generalization(
+    MNT_input_path="input_dem.tif",
+    output_path="generalized_dem.tif",
+    block_size=2000,
+    overlap=20
+)
+```
 
-    generalization(
-        MNT_input_path="input_dem.tif",
-        output_path="generalized_dem.tif",
-        block_size=2000,
-        overlap=20
-    )
-
-Maximal Curvature Function
-**************************
+### Maximal Curvature Function
 
 **`morpho_dem.calculate_maximal_curvature`**
 
@@ -57,21 +52,19 @@ This function calculates a raster of maximal curvature from a DEM.
 
 **Example:**
 
-.. code-block:: python
+```python
+from dem_lic.utils.morpho_dem import calculate_maximal_curvature
 
-    from dem_lic.utils.morpho_dem import calculate_maximal_curvature
+curvature = calculate_maximal_curvature(input_dem, cell_size=10.0)
+```
 
-    curvature = calculate_maximal_curvature(input_dem, cell_size=10.0)
-
-Adaptive Gaussian Blur Function
-*******************************
+### Adaptive Gaussian Blur Function
 
 **`morpho_dem.fast_adaptive_gaussian_blur`**
 
 Applies a selective Gaussian blur to a DEM based on the maximal curvature.
 
-.. image:: docs/images/dem_to_adaptative_blur.png
-   :alt: Exemple of adaptative gaussian blur
+![Exemple of adaptative gaussian blur](docs/images/dem_to_adaptative_blur.png)
 
 **Parameters:**
 
@@ -85,14 +78,13 @@ Applies a selective Gaussian blur to a DEM based on the maximal curvature.
 
 **Example:**
 
-.. code-block:: python
+```python
+from dem_lic.utils.morpho_dem import fast_adaptive_gaussian_blur
 
-    from dem_lic.utils.morpho_dem import fast_adaptive_gaussian_blur
+smoothed_dem = fast_adaptive_gaussian_blur(input_dem, curvature, sigma_max=5.0)
+```
 
-    smoothed_dem = fast_adaptive_gaussian_blur(input_dem, curvature, sigma_max=5.0)
-
-Relative Altitude Function
-**************************
+### Relative Altitude Function
 
 **`morpho_dem.calculate_relative_altitude`**
 
@@ -108,9 +100,7 @@ Computes the relative altitude for each pixel in a DEM, which can be used for fu
 
 **Example:**
 
-.. code-block:: python
+```python
+from dem_lic.utils.morpho_dem import calculate_relative_altitude
 
-    from dem_lic.utils.morpho_dem import calculate_relative_altitude
-
-    relative_altitude = calculate_relative_altitude(input_dem)
-
+relative_altitude = calculate_relative_altitude(input_dem)

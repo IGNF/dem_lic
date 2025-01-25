@@ -15,20 +15,21 @@ from dem_lic.utils.lic_extended import process_geotiff_with_overlap
 
 
 def generalization(
-    MNT_input_path,
-    output_path,
-    block_size=2000,
-    overlap=20,
-    sigma_max=5,
-    slope_threshold=0.1,
-    num_bins=10,
-    min_area=100,
-    num_steps=5,
-    n_iterations=5,
-    sigma_blur_maxcurv=3,
-    k=2.5,
-    ):
-    """Main function to validate inputs and call the `process_geotiff_with_overlap` function.
+    MNT_input_path: str,
+    output_path: str,
+    block_size: int = 2000,
+    overlap: int = 20,
+    sigma_max: float = 5.0,
+    slope_threshold: float = 0.1,
+    num_bins: int = 10,
+    min_area: int = 100,
+    num_steps: int = 5,
+    n_iterations: int = 5,
+    sigma_blur_maxcurv: float = 3.0,
+    k: float = 2.5,
+) -> None:
+    """
+    Main function to validate inputs and call the `process_geotiff_with_overlap` function.
     Processes a GeoTIFF file in overlapping blocks and applies a series of
     transformations for terrain generalization.
 
@@ -38,13 +39,13 @@ def generalization(
         Path to the input GeoTIFF file containing the Digital Elevation Model (DEM).
     output_path : str
         Path to the output GeoTIFF file.
-    block_size : int
+    block_size : int, optional
         Size of non-overlapping blocks (in pixels) to process. Default is 2000.
-    overlap : int
+    overlap : int, optional
         Size of the overlapping region (in pixels) between adjacent blocks. Default is 20.
-    sigma_max : float
-        Maximum kernel width for the adaptive Gaussian blur. Default is 5.
-    slope_threshold : float
+    sigma_max : float, optional
+        Maximum kernel width for the adaptive Gaussian blur. Default is 5.0.
+    slope_threshold : float, optional
         Threshold for slope to distinguish flat and steep areas. Default is 0.1.
     num_bins : int, optional
         Number of bins for sigma approximation in the adaptive blur. Default is 10.
@@ -55,7 +56,7 @@ def generalization(
     n_iterations : int, optional
         Number of iterations for the LIC algorithm. Default is 5.
     sigma_blur_maxcurv : float, optional
-        Gaussian blur parameter for the maximum curvature. Default is 3.
+        Gaussian blur parameter for the maximum curvature. Default is 3.0.
     k : float, optional
         Weighting factor for combining LIC grids. Default is 2.5.
 
@@ -63,7 +64,6 @@ def generalization(
     -------
     None
         The processed output is written directly to the specified GeoTIFF file.
-
 
     Notes
     -----

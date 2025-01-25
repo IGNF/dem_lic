@@ -1,30 +1,27 @@
-Command Line Interface (CLI)
-============================
+# Command Line Interface (CLI)
 
 The command-line interface (CLI) for **dem_lic** allows users to process Digital Elevation Models (DEMs) directly from the terminal using advanced generalization techniques. This document provides detailed information on how to use the CLI, including available commands, options, and examples.
 
-Usage
------
+## Usage
 
 To run the CLI, execute the following command:
 
-.. code-block:: bash
-
-    dem_lic -h
+```bash
+dem_lic -h
+```
 
 Use the `-h` option to display help and see all available arguments and their descriptions.
 
-.. code-block:: bash
+```bash
+dem_lic <MNT_input_path> <output_path> [options]
+```
 
-    dem_lic <MNT_input_path> <output_path> [options]
-
-
-**Positional Arguments**:
+### Positional Arguments
 
 - **MNT_input_path**: Path to the input GeoTIFF file containing the DEM.
 - **output_path**: Path to the output GeoTIFF file where the generalized DEM will be saved.
 
-**Optional Arguments**:
+### Optional Arguments
 
 The following optional arguments can be used to customize the processing:
 
@@ -39,50 +36,46 @@ The following optional arguments can be used to customize the processing:
 - `--sigma_blur_maxcurv` (float): Gaussian blur sigma for maximal curvature (default: 3.0).
 - `--k` (float): Weighting factor for combining LIC results (default: 2.5).
 
-Examples
---------
+## Examples
 
-**Basic Usage**:
+### Basic Usage
 
 Process a DEM with default settings:
 
-.. code-block:: bash
+```bash
+dem_lic input_dem.tif generalized_dem.tif
+```
 
-    dem_lic input_dem.tif generalized_dem.tif
-
-**Custom Parameters**:
+### Custom Parameters
 
 Specify a custom block size and overlap:
 
-.. code-block:: bash
-
-    dem_lic input_dem.tif generalized_dem.tif --block_size 3000 --overlap 50
+```bash
+dem_lic input_dem.tif generalized_dem.tif --block_size 3000 --overlap 50
+```
 
 Increase the number of iterations for better generalization:
 
-.. code-block:: bash
+```bash
+dem_lic input_dem.tif generalized_dem.tif --n_iterations 10
+```
 
-    dem_lic input_dem.tif generalized_dem.tif --n_iterations 10
-
-**Error Handling**:
+### Error Handling
 
 If the input file is missing or invalid, the CLI will raise an error:
 
-.. code-block:: bash
-
-    FileNotFoundError: Input file not found: input_dem.tif
+```bash
+FileNotFoundError: Input file not found: input_dem.tif
+```
 
 If an invalid value is provided for a parameter, the CLI will report an error:
 
-.. code-block:: bash
+```bash
+ValueError: Block size must be a positive integer.
+```
 
-    ValueError: Block size must be a positive integer.
-
-Development Notes
------------------
+## Development Notes
 
 The CLI is implemented in the `cli.py` module and serves as an entry point for the **dem_lic** package. It validates user inputs, parses command-line arguments, and calls the `process_geotiff_with_overlap` function from the `utils.lic_extended` module.
 
 For additional details on the processing algorithm, refer to the code documentation or the source code of `cli.py`.
-
-

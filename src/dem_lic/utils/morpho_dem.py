@@ -8,7 +8,10 @@ from scipy.ndimage import sobel
 from scipy.ndimage import gaussian_filter, label, maximum_filter, minimum_filter
 
 
-def calculate_maximal_curvature(dem, resolution=1):
+def calculate_maximal_curvature(
+        dem: np.ndarray,
+        resolution: float = 1
+) -> np.ndarray:
     """
     Compute the maximal curvature (k_max) of a DEM using vectorized calculations.
 
@@ -69,7 +72,13 @@ def calculate_maximal_curvature(dem, resolution=1):
     return k_max
 
 
-def fast_adaptive_gaussian_blur(grid, curvature, cellsize, sigma_max, num_bins=10):
+def fast_adaptive_gaussian_blur(
+    grid: np.ndarray,
+    curvature: np.ndarray,
+    cellsize: float,
+    sigma_max: float,
+    num_bins: int = 10,
+) -> np.ndarray:
     """Applies a fast adaptive Gaussian blur by grouping pixels into bins based on local curvature values.
 
     Parameters
@@ -100,7 +109,6 @@ def fast_adaptive_gaussian_blur(grid, curvature, cellsize, sigma_max, num_bins=1
 
     The adaptive Gaussian blur ensures that flat areas are smoothed more aggressively while preserving
     sharp features like ridges and peaks.
-
     """
 
     # Step 1: Compute sigma values for each pixel based on curvature
@@ -147,7 +155,10 @@ def fast_adaptive_gaussian_blur(grid, curvature, cellsize, sigma_max, num_bins=1
 
 
 # Chapter 3.6 : Preserving sharp transitions to flat areas
-def initialize_flat_steep_grid(mnt, slope_threshold):
+def initialize_flat_steep_grid(
+        mnt: np.ndarray,
+        slope_threshold: float
+) -> np.ndarray:
     """Creates a binary grid to distinguish flat and steep areas based on slope
     calculated from the DEM.
 
@@ -183,7 +194,10 @@ def initialize_flat_steep_grid(mnt, slope_threshold):
     return flat_steep_grid
 
 
-def remove_small_flat_areas(flat_steep_grid, min_area):
+def remove_small_flat_areas(
+        flat_steep_grid: np.ndarray,
+        min_area: int
+) -> np.ndarray:
     """Removes small flat areas from a binary grid by replacing regions smaller
     than the specified threshold with steep areas.
 
@@ -222,7 +236,10 @@ def remove_small_flat_areas(flat_steep_grid, min_area):
     return cleaned_grid
 
 
-def calculate_relative_altitude(mnt, window_size=40):
+def calculate_relative_altitude(
+        mnt: np.ndarray,
+        window_size: int = 40
+) -> np.ndarray:
     """Computes a raster of normalized relative altitude values between 0 and 1
     based on local elevation. This is intended to weight the combination
     of ridge enhancement and flat area transition treatments.

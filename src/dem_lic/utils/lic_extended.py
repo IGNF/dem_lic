@@ -17,6 +17,7 @@ import rasterio
 from rasterio.windows import Window
 from tqdm import tqdm
 from scipy.ndimage import gaussian_filter
+from typing import Dict
 
 # intern imports
 from dem_lic.utils.morpho_dem import calculate_maximal_curvature, fast_adaptive_gaussian_blur
@@ -27,7 +28,12 @@ from dem_lic.utils.morpho_dem import (
 )
 
 
-def extended_lic_weighted_altitude(grid, relative_altitude, cellsize, num_steps):
+def extended_lic_weighted_altitude(
+    grid: np.ndarray,
+    relative_altitude: np.ndarray,
+    cellsize: float,
+    num_steps: int,
+) -> np.ndarray:
     """Applies a Line Integral Convolution (LIC) weighted with a Gaussian kernel,
     adjusted by local relative altitude values (chapter 3.4).
 
@@ -130,8 +136,12 @@ def extended_lic_weighted_altitude(grid, relative_altitude, cellsize, num_steps)
 
 
 def extended_lic_weighted_altitude_lengthModulated(
-    grid, relative_altitude, cellsize, f, num_steps
-):
+    grid: np.ndarray,
+    relative_altitude: np.ndarray,
+    cellsize: float,
+    f: np.ndarray,
+    num_steps: int,
+) -> np.ndarray:
     """Applies a Line Integral Convolution (LIC) with integration line length dynamically modulated by a mask.
     Chapter 3.6.
 
@@ -233,8 +243,16 @@ def extended_lic_weighted_altitude_lengthModulated(
 
 
 def LIC_iterations(
-    grid, altitude_relative, cellsize, profile, f, num_steps, n_iterations, sigma, k
-):
+    grid: np.ndarray,
+    altitude_relative: np.ndarray,
+    cellsize: float,
+    profile: Dict,
+    f: np.ndarray,
+    num_steps: int,
+    n_iterations: int,
+    sigma: float,
+    k: float,
+) -> np.ndarray:
     """Perform multiple iterations of the Line Integral Convolution (LIC) method to generalize a DEM
     by combining smoothing and feature enhancement.
 
@@ -312,7 +330,12 @@ def LIC_iterations(
     return grid
 
 
-def correct_flat_area_values(b, c, sigma, epsilon=1e-6):
+def correct_flat_area_values(
+    b: np.ndarray,
+    c: np.ndarray,
+    sigma: float,
+    epsilon: float = 1e-6,
+) -> np.ndarray:
     """Adjusts the values in flat areas of a continuous grid after Gaussian blurring
     to improve the representation of transitions.
 
@@ -356,19 +379,19 @@ def correct_flat_area_values(b, c, sigma, epsilon=1e-6):
 
 
 def process_geotiff_with_overlap(
-    MNT_input_path,
-    output_path,
-    block_size=2000,
-    overlap=20,
-    sigma_max=5,
-    slope_threshold=0.1,
-    num_bins=10,
-    min_area=100,
-    num_steps=5,
-    n_iterations=5,
-    sigma_blur_maxcurv=3,
-    k=2.5,
-):
+    MNT_input_path: str,
+    output_path: str,
+    block_size: int = 2000,
+    overlap: int = 20,
+    sigma_max: float = 5.0,
+    slope_threshold: float = 0.1,
+    num_bins: int = 10,
+    min_area: int = 100,
+    num_steps: int = 5,
+    n_iterations: int = 5,
+    sigma_blur_maxcurv: float = 3.0,
+    k: float = 2.5,
+) -> None:
     """Processes a GeoTIFF file in overlapping blocks and applies a series of
     transformations for terrain generalization.
 
