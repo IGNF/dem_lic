@@ -14,7 +14,8 @@ venv/
 *.egg-info/
 dist/
 build/
-_*/
+_build/
+_templates/
 
 
 # Logs
