@@ -1,5 +1,9 @@
 # DEM Generalization with LIC
 
+[![License: MIT](./docs/_static/License-MIT.svg)](./LICENSE.txt)
+[![Python](./docs/_static/Python-3.8.svg)](https://www.python.org/)
+
+
 A Python package for Digital Elevation Model (DEM) generalization, leveraging Line Integral Convolution (LIC) and adaptive Gaussian blur techniques to simplify terrain representations while preserving key features. The method processes large DEM files efficiently by dividing them into overlapping blocks.
 
 ## Documentation
@@ -48,7 +52,7 @@ Optional arguments can be used to adjust the process:
 dem_lic input_dem.tif output_generalized_dem.tif --n_iterations 5 --overlap 20
 ```
 
-For detailed usage instructions and a complete list of options, refer to the [CLI Documentation](cli.md).
+For detailed usage instructions and a complete list of options, refer to the [CLI Documentation](./docs/cli.md).
 
 ## Python Quick Start
 

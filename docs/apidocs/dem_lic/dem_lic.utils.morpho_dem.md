@@ -39,35 +39,35 @@
 
 ### API
 
-````{py:function} calculate_maximal_curvature(dem, resolution=1)
+````{py:function} calculate_maximal_curvature(dem: numpy.ndarray, resolution: float = 1) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.calculate_maximal_curvature
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_maximal_curvature
 ```
 ````
 
-````{py:function} fast_adaptive_gaussian_blur(grid, curvature, cellsize, sigma_max, num_bins=10)
+````{py:function} fast_adaptive_gaussian_blur(grid: numpy.ndarray, curvature: numpy.ndarray, cellsize: float, sigma_max: float, num_bins: int = 10) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.fast_adaptive_gaussian_blur
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.fast_adaptive_gaussian_blur
 ```
 ````
 
-````{py:function} initialize_flat_steep_grid(mnt, slope_threshold)
+````{py:function} initialize_flat_steep_grid(mnt: numpy.ndarray, slope_threshold: float) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.initialize_flat_steep_grid
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.initialize_flat_steep_grid
 ```
 ````
 
-````{py:function} remove_small_flat_areas(flat_steep_grid, min_area)
+````{py:function} remove_small_flat_areas(flat_steep_grid: numpy.ndarray, min_area: int) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.remove_small_flat_areas
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.remove_small_flat_areas
 ```
 ````
 
-````{py:function} calculate_relative_altitude(mnt, window_size=40)
+````{py:function} calculate_relative_altitude(mnt: numpy.ndarray, window_size: int = 40) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.calculate_relative_altitude
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_relative_altitude

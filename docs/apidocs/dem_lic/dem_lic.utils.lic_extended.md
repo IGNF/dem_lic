@@ -46,28 +46,28 @@
 ```
 ````
 
-````{py:function} extended_lic_weighted_altitude_lengthModulated(grid, relative_altitude, cellsize, f, num_steps)
+````{py:function} extended_lic_weighted_altitude_lengthModulated(grid: numpy.ndarray, relative_altitude: numpy.ndarray, cellsize: float, f: numpy.ndarray, num_steps: int) -> numpy.ndarray
 :canonical: dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated
 
 ```{autodoc2-docstring} dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated
 ```
 ````
 
-````{py:function} LIC_iterations(grid, altitude_relative, cellsize, profile, f, num_steps, n_iterations, sigma, k)
+````{py:function} LIC_iterations(grid: numpy.ndarray, altitude_relative: numpy.ndarray, cellsize: float, profile: typing.Dict, f: numpy.ndarray, num_steps: int, n_iterations: int, sigma: float, k: float) -> numpy.ndarray
 :canonical: dem_lic.utils.lic_extended.LIC_iterations
 
 ```{autodoc2-docstring} dem_lic.utils.lic_extended.LIC_iterations
 ```
 ````
 
-````{py:function} correct_flat_area_values(b, c, sigma, epsilon=1e-06)
+````{py:function} correct_flat_area_values(b: numpy.ndarray, c: numpy.ndarray, sigma: float, epsilon: float = 1e-06) -> numpy.ndarray
 :canonical: dem_lic.utils.lic_extended.correct_flat_area_values
 
 ```{autodoc2-docstring} dem_lic.utils.lic_extended.correct_flat_area_values
 ```
 ````
 
-````{py:function} process_geotiff_with_overlap(MNT_input_path, output_path, block_size=2000, overlap=20, sigma_max=5, slope_threshold=0.1, num_bins=10, min_area=100, num_steps=5, n_iterations=5, sigma_blur_maxcurv=3, k=2.5)
+````{py:function} process_geotiff_with_overlap(MNT_input_path: str, output_path: str, block_size: int = 2000, overlap: int = 20, sigma_max: float = 5.0, slope_threshold: float = 0.1, num_bins: int = 10, min_area: int = 100, num_steps: int = 5, n_iterations: int = 5, sigma_blur_maxcurv: float = 3.0, k: float = 2.5) -> None
 :canonical: dem_lic.utils.lic_extended.process_geotiff_with_overlap
 
 ```{autodoc2-docstring} dem_lic.utils.lic_extended.process_geotiff_with_overlap

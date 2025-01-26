@@ -29,7 +29,7 @@ extensions = [
 autodoc2_render_plugin = "myst"
 
 autodoc2_packages = [
-    "./src/dem_lic",  
+    "../src/dem_lic",  
 ]
 
 
