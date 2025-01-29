@@ -64,7 +64,7 @@ curvature = calculate_maximal_curvature(input_dem, cell_size=10.0)
 
 Applies a selective Gaussian blur to a DEM based on the maximal curvature.
 
-![Exemple of adaptative gaussian blur](images/dem_to_adaptative_blur.png)
+![Exemple of adaptative gaussian blur](../images/dem_to_adaptative_blur.png)
 
 **Parameters:**
 
