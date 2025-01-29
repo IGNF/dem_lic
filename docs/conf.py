@@ -10,7 +10,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../src'))
 
 
-project = 'demgen_lic'
+project = 'dem_lic'
 copyright = '2025, Edmond SAINT DENIS'
 author = 'Edmond SAINT DENIS'
 release = '1.0'
@@ -63,9 +63,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
 
-html_sidebars = {
-  "**": []
-}
+# html_sidebars = {
+#   "**": []
+# }
 html_theme_options = {
     # "show_nav_level": 0,  # Affiche les sous-niveaux dans la navigation
     # "navigation_depth": 1,  # Profondeur maximale des niveaux affichés

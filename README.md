@@ -6,6 +6,14 @@
 
 A Python package for Digital Elevation Model (DEM) generalization, leveraging Line Integral Convolution (LIC) and adaptive Gaussian blur techniques to simplify terrain representations while preserving key features. The method processes large DEM files efficiently by dividing them into overlapping blocks.
 
+This implementation is based on the work presented in the article:
+
+```{note}
+Bernhard Jenny (2021) Terrain generalization with line integral convolution, Cartography and Geographic Information Science, 48:1, 78-92, DOI: 10.1080/15230406.2020.1833762
+```
+[https://doi.org/10.1080/15230406.2020.1833762](https://doi.org/10.1080/15230406.2020.1833762)
+
+
 ## Documentation
 
 Full documentation is available at:
