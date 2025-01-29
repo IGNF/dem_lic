@@ -60,7 +60,7 @@ Optional arguments can be used to adjust the process:
 dem_lic input_dem.tif output_generalized_dem.tif --n_iterations 5 --overlap 20
 ```
 
-For detailed usage instructions and a complete list of options, refer to the [CLI Documentation](./docs/cli.md).
+For detailed usage instructions and a complete list of options, refer to the [CLI Documentation](./docs/documentation/cli.md).
 
 ## Python Quick Start
 
