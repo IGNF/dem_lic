@@ -279,3 +279,41 @@ def calculate_relative_altitude(
     relative_altitude = np.clip(relative_altitude, 0, 1)
 
     return relative_altitude
+
+
+def calculate_local_range(
+        mnt: np.ndarray,
+        steps: int = 5
+) -> np.ndarray:
+    """Computes the altitude range in a window. This is intended to weight the elevation
+    of each point in the line integral convolution.
+
+    Parameters
+    ----------
+    mnt : numpy.ndarray
+        2D array representing the Digital Elevation Model (DEM).
+    steps : int, optional
+        Mid size of the window (in pixels) used to compute local maximums and minimums.
+        Default is 5.
+
+    Returns
+    -------
+    numpy.ndarray
+        2D array of local elevation range.
+
+    Notes
+    -----
+    The function calculates the difference between the local
+    maximum value and the local minimum within a moving window
+    (local maximum - local minimum).
+    """
+    
+    window_size = 2* steps
+    max_local = maximum_filter(mnt, size=window_size, mode="reflect")
+    min_local = minimum_filter(mnt, size=window_size, mode="reflect")
+    
+    range_alt = np.abs(max_local-min_local)
+
+
+    return range_alt
+
