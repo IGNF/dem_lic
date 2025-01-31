@@ -12,8 +12,7 @@ def calculate_maximal_curvature(
         dem: np.ndarray,
         resolution: float = 1
 ) -> np.ndarray:
-    """
-    Compute the maximal curvature (k_max) of a DEM using vectorized calculations.
+    """Compute the maximal curvature (k_max) of a DEM using vectorized calculations.
 
     Parameters
     ----------
@@ -157,7 +156,8 @@ def fast_adaptive_gaussian_blur(
 # Chapter 3.6 : Preserving sharp transitions to flat areas
 def initialize_flat_steep_grid(
         mnt: np.ndarray,
-        slope_threshold: float
+        slope_threshold: float,
+        cellsize: float
 ) -> np.ndarray:
     """Creates a binary grid to distinguish flat and steep areas based on slope
     calculated from the DEM.
@@ -167,8 +167,9 @@ def initialize_flat_steep_grid(
     mnt : numpy.ndarray
         2D array representing the Digital Elevation Model (DEM).
     slope_threshold : float
-        Threshold value for the slope to separate flat areas (0) from steep areas (1).
-
+        Threshold value for the slope to separate flat areas (0) from steep areas (1), in degrees.
+    cellsize : float
+        The size of the raster cells in meters.
     Returns
     -------
     numpy.ndarray
@@ -182,14 +183,15 @@ def initialize_flat_steep_grid(
 
     """
     # Step 1: Compute the partial derivatives in x and y directions
-    dz_dx = np.gradient(mnt, axis=1)  # Gradient in the x-direction
-    dz_dy = np.gradient(mnt, axis=0)  # Gradient in the y-direction
+    dz_dx = np.gradient(mnt, axis=1) / cellsize
+    dz_dy = np.gradient(mnt, axis=0) / cellsize
 
-    # Step 2: Compute the slope magnitude
-    slope = np.sqrt(dz_dx**2 + dz_dy**2)
-
+    # Step 2: Compute the slope value
+    slope_radians = np.arctan( np.sqrt(dz_dx**2 + dz_dy**2) )
+    slope_degrees = np.rad2deg(slope_radians)
+    
     # Step 3: Create a binary grid based on the slope threshold
-    flat_steep_grid = np.where(slope < slope_threshold, 0, 1)
+    flat_steep_grid = np.where(slope_degrees < slope_threshold, 0, 1)
 
     return flat_steep_grid
 
@@ -235,50 +237,6 @@ def remove_small_flat_areas(
 
     return cleaned_grid
 
-
-def calculate_relative_altitude(
-        mnt: np.ndarray,
-        window_size: int = 40
-) -> np.ndarray:
-    """Computes a raster of normalized relative altitude values between 0 and 1
-    based on local elevation. This is intended to weight the combination
-    of ridge enhancement and flat area transition treatments.
-
-    Parameters
-    ----------
-    mnt : numpy.ndarray
-        2D array representing the Digital Elevation Model (DEM).
-    window_size : int, optional
-        Size of the window (in pixels) used to compute local maximums and minimums.
-        Default is 40.
-
-    Returns
-    -------
-    numpy.ndarray
-        2D array of normalized relative altitude values between 0 and 1.
-
-    Notes
-    -----
-    The function calculates relative altitude as the difference between the current
-    pixel value and the local minimum within a moving window, normalized by the range
-    (local maximum - local minimum). Flat areas with no variation are assigned a neutral value of 0.5.
-    """
-    # Step 1: Calculate local maximum values within the specified window size
-    max_local = maximum_filter(mnt, size=window_size, mode="reflect")
-
-    # Step 2: Calculate local minimum values within the specified window size
-    min_local = minimum_filter(mnt, size=window_size, mode="reflect")
-
-    # Step 3: Compute the relative altitude as a normalized value
-    denominator = max_local - min_local  # Compute the range in the window
-    with np.errstate(divide="ignore", invalid="ignore"):  # Handle divisions by zero
-        relative_altitude = (mnt - min_local) / denominator  # Normalize elevation
-        relative_altitude[denominator == 0] = 0.5  # Assign neutral value to flat areas
-
-    # Step 4: Ensure all values are clipped between 0 and 1
-    relative_altitude = np.clip(relative_altitude, 0, 1)
-
-    return relative_altitude
 
 
 def calculate_local_range(

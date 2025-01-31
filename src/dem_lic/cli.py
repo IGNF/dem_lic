@@ -36,10 +36,12 @@ def main():
     parser.add_argument("--block_size", type=int, default=2000, help="Size of processing blocks in pixels. Default: 2000.")
     parser.add_argument("--overlap", type=int, default=20, help="Size of the overlap in pixels. Default: 20.")
     parser.add_argument("--sigma_max", type=float, default=5.0, help="Maximum Gaussian kernel width. Default: 5.0.")
-    parser.add_argument("--slope_threshold", type=float, default=0.1, help="Slope threshold for flat/steep distinction. Default: 0.1.")
+    parser.add_argument("--slope_threshold", type=float, default=6, help="Slope threshold for flat/steep distinction in degrees. Default: 6.")
     parser.add_argument("--num_bins", type=int, default=10, help="Number of bins for sigma approximation. Default: 10.")
     parser.add_argument("--min_area", type=int, default=100, help="Minimum size of flat areas to preserve (in pixels). Default: 100.")
     parser.add_argument("--num_steps", type=int, default=5, help="Maximum integration length for LIC. Default: 5.")
+    parser.add_argument("--sigma_modulated", type=str, default="true", choices=["true", "false"],
+                        help="Whether altitude weighting is used in the LIC algorithm (true/false). Default: true.")    
     parser.add_argument("--n_iterations", type=int, default=5, help="Number of LIC iterations. Default: 5.")
     parser.add_argument("--sigma_blur_maxcurv", type=float, default=3.0, help="Gaussian blur sigma for max curvature. Default: 3.0.")
     parser.add_argument("--k", type=float, default=2.5, help="Weighting factor for combining LIC results. Default: 2.5.")
@@ -75,6 +77,10 @@ def main():
         raise ValueError("Number of steps must be a positive integer.")
     if args.n_iterations <= 0:
         raise ValueError("Number of iterations must be a positive integer.")
+        
+    
+    # Convert `sigma_modulated` from string to boolean
+    sigma_modulated = args.sigma_modulated.lower() == "true"
 
     # Call the processing function
     process_geotiff_with_overlap(
@@ -87,6 +93,7 @@ def main():
         num_bins=args.num_bins,
         min_area=args.min_area,
         num_steps=args.num_steps,
+        sigma_modulated=sigma_modulated,
         n_iterations=args.n_iterations,
         sigma_blur_maxcurv=args.sigma_blur_maxcurv,
         k=args.k,

@@ -10,7 +10,8 @@ https://doi.org/10.1080/15230406.2020.1833762"
 import os
 
 
-from dem_lic.utils.lic_extended import process_geotiff_with_overlap
+from dem_lic.utils.lic_extended import process_lic_extended, process_geotiff_in_block_with_overlap
+from functools import partial
 
 
 
@@ -20,10 +21,11 @@ def generalization(
     block_size: int = 2000,
     overlap: int = 20,
     sigma_max: float = 5.0,
-    slope_threshold: float = 0.1,
+    slope_threshold: float = 6,
     num_bins: int = 10,
     min_area: int = 100,
     num_steps: int = 5,
+    sigma_modulated: bool = True,
     n_iterations: int = 5,
     sigma_blur_maxcurv: float = 3.0,
     k: float = 2.5,
@@ -46,13 +48,16 @@ def generalization(
     sigma_max : float, optional
         Maximum kernel width for the adaptive Gaussian blur. Default is 5.0.
     slope_threshold : float, optional
-        Threshold for slope to distinguish flat and steep areas. Default is 0.1.
+        Threshold for slope to distinguish flat and steep areas, in degrees. Default is 6.
     num_bins : int, optional
         Number of bins for sigma approximation in the adaptive blur. Default is 10.
     min_area : int, optional
         Minimum size (in pixels) for flat areas to be preserved. Default is 100.
     num_steps : int, optional
         Maximum integration length for the LIC algorithm. Default is 5.
+     sigma_modulated : bool, optional
+        If True, the sigma for the weighting in the LIC algorithm is modulated by the altitude.
+        If False, a fixed Gaussian sigma is used.
     n_iterations : int, optional
         Number of iterations for the LIC algorithm. Default is 5.
     sigma_blur_maxcurv : float, optional
@@ -100,20 +105,33 @@ def generalization(
     if not isinstance(n_iterations, int) or n_iterations <= 0:
         raise ValueError("Number of iterations must be a positive integer.")
 
-    # Call the processing function
-    process_geotiff_with_overlap(
-        MNT_input_path=MNT_input_path,
-        output_path=output_path,
-        block_size=block_size,
-        overlap=overlap,
+    # Check that sigma_modulated is a boolean
+    if not isinstance(sigma_modulated, bool):
+        raise ValueError("sigma_modulated must be a boolean (True or False).")
+
+
+    
+    # Create a partially configured version of process_lic_extended
+    lic_extended_partial = partial(
+        process_lic_extended,
         sigma_max=sigma_max,
         slope_threshold=slope_threshold,
         num_bins=num_bins,
         min_area=min_area,
         num_steps=num_steps,
+        sigma_modulated=sigma_modulated,
         n_iterations=n_iterations,
         sigma_blur_maxcurv=sigma_blur_maxcurv,
         k=k,
+    )
+    
+    # Call the processing function with the pre-configured LIC function
+    process_geotiff_in_block_with_overlap(
+        MNT_input_path=MNT_input_path,
+        output_path=output_path,
+        processing_function=lic_extended_partial,
+        block_size=block_size,
+        overlap=overlap
     )
 
     print("Processing completed successfully.")
@@ -123,8 +141,17 @@ if __name__ == "__main__":
     MNT_input_path = ""
     LIC_complete_output_path = ""
 
+    
     # Call the processing function
     generalization(
         MNT_input_path,
-        LIC_complete_output_path
+        LIC_complete_output_path,
+        sigma_max = 2.0,
+        num_steps = 5,
+        sigma_modulated= True,
+        n_iterations = 4,
+        sigma_blur_maxcurv = 2.9,
+
     )
+
+    
