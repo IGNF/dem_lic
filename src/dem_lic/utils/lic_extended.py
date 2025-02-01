@@ -522,10 +522,11 @@ if __name__ == "__main__":
 
 
     # File paths
-    MNT_input_path = "../../../../QGIS/out/Valtellina_NASADEM.tif"
+    MNT_input_path = "../../../../QGIS/out/Zone_O1_Christophe_Oisans_2021_MNTLHD_extrait4km.tif"
     # MNT_input_path = "../../../../zones_test/Zone_O1_St_Christophe_en_Oisans/bdaltiv2/Zone_O1_Christophe_Oisans_BDALTIV2.tif"
-
-    LIC_complete_output_path = "../../../../out_scripts_test_temp/Valtellina_NASADEM_LIC_article_function.tif"
+    
+    name_file = MNT_input_path.split("/")[-1][:-4]
+    LIC_complete_output_path = f"../../../../out_scripts/{name_file}_article.tif"
     # LIC_complete_output_path = "../../../../out_scripts/Zone_O1_Christophe_Oisans_BDALTIV2_article.tif"
     
     # Call the processing function
