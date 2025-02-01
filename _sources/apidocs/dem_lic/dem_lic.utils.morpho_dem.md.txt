@@ -31,8 +31,8 @@
   - ```{autodoc2-docstring} dem_lic.utils.morpho_dem.remove_small_flat_areas
     :summary:
     ```
-* - {py:obj}`calculate_relative_altitude <dem_lic.utils.morpho_dem.calculate_relative_altitude>`
-  - ```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_relative_altitude
+* - {py:obj}`calculate_local_range <dem_lic.utils.morpho_dem.calculate_local_range>`
+  - ```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_local_range
     :summary:
     ```
 ````
@@ -53,7 +53,7 @@
 ```
 ````
 
-````{py:function} initialize_flat_steep_grid(mnt: numpy.ndarray, slope_threshold: float) -> numpy.ndarray
+````{py:function} initialize_flat_steep_grid(mnt: numpy.ndarray, slope_threshold: float, cellsize: float) -> numpy.ndarray
 :canonical: dem_lic.utils.morpho_dem.initialize_flat_steep_grid
 
 ```{autodoc2-docstring} dem_lic.utils.morpho_dem.initialize_flat_steep_grid
@@ -67,9 +67,9 @@
 ```
 ````
 
-````{py:function} calculate_relative_altitude(mnt: numpy.ndarray, window_size: int = 40) -> numpy.ndarray
-:canonical: dem_lic.utils.morpho_dem.calculate_relative_altitude
+````{py:function} calculate_local_range(mnt: numpy.ndarray, steps: int = 5) -> numpy.ndarray
+:canonical: dem_lic.utils.morpho_dem.calculate_local_range
 
-```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_relative_altitude
+```{autodoc2-docstring} dem_lic.utils.morpho_dem.calculate_local_range
 ```
 ````

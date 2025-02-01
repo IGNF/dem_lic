@@ -366,33 +366,42 @@
 convolution, Cartography and Geographic Information Science, 48:1, 78-92, DOI:
 10.1080/15230406.2020.1833762
 https://doi.org/10.1080/15230406.2020.1833762”</p>
-<p>Including the preliminary processing of adaptive Gaussian blur applied to the DTM.
-Use of a raster of relative altitudes</p>
+<p>Including the preliminary processing of adaptive Gaussian blur applied to the DTM.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude" title="dem_lic.utils.lic_extended.extended_lic_weighted_altitude"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extended_lic_weighted_altitude</span></code></a></p></td>
-<td><p>Applies a Line Integral Convolution (LIC) weighted with a Gaussian kernel,
-adjusted by local relative altitude values (chapter 3.4).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated" title="dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extended_lic_weighted_altitude_lengthModulated</span></code></a></p></td>
+<td><p>Applies a Line Integral Convolution (LIC) with a dynamically modulated integration
+length (based on f) and a variable Gaussian kernel that reduces the influence of
+higher terrain along the line of integration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated" title="dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extended_lic_weighted_altitude_lengthModulated</span></code></a></p></td>
-<td><p>Applies a Line Integral Convolution (LIC) with integration line length dynamically modulated by a mask.
-Chapter 3.6.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.LIC_iterations" title="dem_lic.utils.lic_extended.LIC_iterations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LIC_iterations</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.LIC_iterations" title="dem_lic.utils.lic_extended.LIC_iterations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LIC_iterations</span></code></a></p></td>
 <td><p>Perform multiple iterations of the Line Integral Convolution (LIC) method to generalize a DEM
 by combining smoothing and feature enhancement.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.correct_flat_area_values" title="dem_lic.utils.lic_extended.correct_flat_area_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correct_flat_area_values</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.correct_flat_area_values" title="dem_lic.utils.lic_extended.correct_flat_area_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correct_flat_area_values</span></code></a></p></td>
 <td><p>Adjusts the values in flat areas of a continuous grid after Gaussian blurring
 to improve the representation of transitions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.process_geotiff_with_overlap" title="dem_lic.utils.lic_extended.process_geotiff_with_overlap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_geotiff_with_overlap</span></code></a></p></td>
-<td><p>Processes a GeoTIFF file in overlapping blocks and applies a series of
-transformations for terrain generalization.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.process_geotiff_in_block_with_overlap" title="dem_lic.utils.lic_extended.process_geotiff_in_block_with_overlap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_geotiff_in_block_with_overlap</span></code></a></p></td>
+<td><p>Processes a GeoTIFF file in overlapping blocks and applies a user-defined processing function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.process_lic_extended" title="dem_lic.utils.lic_extended.process_lic_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_lic_extended</span></code></a></p></td>
+<td><p>Processes a single block of a DEM with LIC and generalization techniques.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.lic_extended.lic_extended_partial" title="dem_lic.utils.lic_extended.lic_extended_partial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lic_extended_partial</span></code></a></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -401,87 +410,80 @@ transformations for terrain generalization.</p></td>
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="dem_lic.utils.lic_extended.extended_lic_weighted_altitude">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">extended_lic_weighted_altitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude" title="Link to this definition">#</a></dt>
-<dd><p>Applies a Line Integral Convolution (LIC) weighted with a Gaussian kernel,
-adjusted by local relative altitude values (chapter 3.4).</p>
-<p class="rubric" id="id13">Parameters</p>
-<p>grid : numpy.ndarray
-A 2D array representing the Digital Elevation Model (DEM).
-relative_altitude : numpy.ndarray
-A 2D array of relative altitudes normalized between 0 and 1.
-cellsize : float
-The size of the raster cells in meters.
-num_steps : int
-The maximum length of the integration line.</p>
-<p class="rubric" id="id14">Returns</p>
-<p>numpy.ndarray
-A 2D array resulting from the LIC processing weighted by Gaussian adjustment.</p>
-<p class="rubric" id="id15">Notes</p>
-<p>This function adjusts the integration process by using relative altitude values
-to calculate a varying Gaussian weight, ensuring finer details are preserved while
-achieving smoothing.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">extended_lic_weighted_altitude_lengthModulated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated" title="Link to this definition">#</a></dt>
-<dd><p>Applies a Line Integral Convolution (LIC) with integration line length dynamically modulated by a mask.
-Chapter 3.6.</p>
-<p class="rubric" id="id16">Parameters</p>
-<p>grid : numpy.ndarray
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">extended_lic_weighted_altitude_lengthModulated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_range_altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_modulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated" title="Link to this definition">#</a></dt>
+<dd><p>Applies a Line Integral Convolution (LIC) with a dynamically modulated integration
+length (based on f) and a variable Gaussian kernel that reduces the influence of
+higher terrain along the line of integration.</p>
+<p class="rubric" id="id11">Parameters</p>
+<p>grid : np.ndarray
 A 2D array representing the Digital Elevation Model (DEM).
-relative_altitude : numpy.ndarray
-A 2D array of relative altitudes normalized between 0 and 1.
+local_range_altitude : np.ndarray
+A 2D array (same shape as <code class="docutils literal notranslate"><span class="pre">grid</span></code>) giving the local altitude range (e.g.,
+max-min in a neighborhood) for each pixel. Used to normalize the difference
+in elevation along the integration line.
 cellsize : float
-The size of the raster cells in meters.
-f : numpy.ndarray
-Continuous modulation grid with values ranging between 0 and 1.
+The size of each raster cell in meters.
+f : np.ndarray
+A 2D array (same shape as <code class="docutils literal notranslate"><span class="pre">grid</span></code>) in [0, 1], controlling the fraction of
+the maximum integration steps allowed for each pixel (e.g., in flat or steep areas).
 num_steps : int
-The maximum length of the integration line.</p>
-<p class="rubric" id="id17">Returns</p>
-<p>numpy.ndarray
-A 2D array representing the smoothed DEM after LIC processing.</p>
-<p class="rubric" id="id18">Notes</p>
-<p>This function dynamically adjusts the integration line length based on the modulation mask <code class="docutils literal notranslate"><span class="pre">f</span></code>,
-allowing for finer control of the convolution process in flat or steep areas.</p>
+The maximum number of integration steps for each pixel.
+sigma_modulated : bool, optional
+If True, the sigma for the weighting in the LIC algorithm is modulated by the altitude.
+If False, a fixed Gaussian sigma is used.</p>
+<p class="rubric" id="id12">Returns</p>
+<p>np.ndarray
+The DEM after the weighted LIC processing, where ridges are accentuated
+by decreasing the Gaussian kernel’s sigma for portions that lie above
+the starting pixel’s altitude.</p>
+<p class="rubric" id="id13">Notes</p>
+<ol class="arabic simple">
+<li><p>We perform two passes: forward and backward along the gradient vectors.</p></li>
+<li><p>The number of steps each pixel can take in each pass is <code class="docutils literal notranslate"><span class="pre">round(f[i,j]</span> <span class="pre">*</span> <span class="pre">num_steps)</span></code>.</p></li>
+<li><p>A variable Gaussian kernel is computed at each step. The difference
+in altitude (dh) between the current position and the pixel’s origin
+is normalized by the local altitude range, and used to reduce sigma
+for higher (amont) portions.</p></li>
+<li><p>The final values are normalized by the sum of the Gaussian weights.</p></li>
+</ol>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dem_lic.utils.lic_extended.LIC_iterations">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">LIC_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude_relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.LIC_iterations" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">LIC_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_range_altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_modulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.LIC_iterations" title="Link to this definition">#</a></dt>
 <dd><p>Perform multiple iterations of the Line Integral Convolution (LIC) method to generalize a DEM
 by combining smoothing and feature enhancement.</p>
-<p class="rubric" id="id19">Parameters</p>
+<p class="rubric" id="id14">Parameters</p>
 <p>grid : numpy.ndarray
 2D array representing the input Digital Elevation Model (DEM).
-altitude_relative : numpy.ndarray
-2D array of normalized relative altitudes (values between 0 and 1).
+local_range_altitude : numpy ndarray
+2D array of the range of elevation in a windows centered on each point
 cellsize : float
 The spatial resolution of the DEM (in meters).
-profile : dict
-Metadata associated with the raster.
 f : numpy.ndarray
 Continuous grid used to modulate the integration length.
 num_steps : int
 Maximum length of the integration line.
+sigma_modulated : bool, optional
+If True, the sigma for the weighting in the LIC algorithm is modulated by the altitude.
+If False, a fixed Gaussian sigma is used.
 n_iterations : int
 Number of iterations of the LIC algorithm.
 sigma : float
 Standard deviation for the Gaussian blur applied to the curvature.
 k : float
 Weighting factor for the combination of grids.</p>
-<p class="rubric" id="id20">Returns</p>
+<p class="rubric" id="id15">Returns</p>
 <p>numpy.ndarray
 2D array representing the DEM after LIC iterations.</p>
-<p class="rubric" id="id21">Notes</p>
+<p class="rubric" id="id16">Notes</p>
 <p>This function performs the following steps for each iteration:</p>
 <ol class="arabic simple">
-<li><p>Computes a modulated LIC and a standard LIC for the DEM.</p></li>
-<li><p>Combines the two LIC results using the relative altitude grid.</p></li>
-<li><p>Calculates the maximal curvature of the combined grid.</p></li>
+<li><p>Computes a modulated LIC</p></li>
+<li><p>Calculates the maximal curvature of the resulting grid.</p></li>
 <li><p>Applies Gaussian smoothing to the curvature.</p></li>
-<li><p>Updates the DEM using a weighted combination of the original DEM and the combined LIC result.</p></li>
+<li><p>Updates the DEM using a weighted combination of the original DEM and the LIC result.</p></li>
 </ol>
 </dd></dl>
 
@@ -490,7 +492,7 @@ Weighting factor for the combination of grids.</p>
 <span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">correct_flat_area_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.correct_flat_area_values" title="Link to this definition">#</a></dt>
 <dd><p>Adjusts the values in flat areas of a continuous grid after Gaussian blurring
 to improve the representation of transitions.</p>
-<p class="rubric" id="id22">Parameters</p>
+<p class="rubric" id="id17">Parameters</p>
 <p>b : numpy.ndarray
 2D binary array representing flat areas (0) and steep areas (1).
 c : numpy.ndarray
@@ -499,55 +501,74 @@ sigma : float
 Gaussian blur parameter for processing the differences.
 epsilon : float, optional
 A small value to avoid division by zero, by default 1e-6.</p>
-<p class="rubric" id="id23">Returns</p>
+<p class="rubric" id="id18">Returns</p>
 <p>numpy.ndarray
 2D corrected array after adjusting values in flat areas.</p>
-<p class="rubric" id="id24">Notes</p>
+<p class="rubric" id="id19">Notes</p>
 <p>The function modifies the continuous grid <code class="docutils literal notranslate"><span class="pre">c</span></code> by correcting values in flat areas (indicated by 0 in <code class="docutils literal notranslate"><span class="pre">b</span></code>).
 The adjustment is based on a blurred version of the difference between <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>, scaled by a
 computed factor <code class="docutils literal notranslate"><span class="pre">s</span></code>. This ensures smoother transitions while preserving flat and steep area characteristics.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="dem_lic.utils.lic_extended.process_geotiff_with_overlap">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">process_geotiff_with_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MNT_input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_blur_maxcurv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.process_geotiff_with_overlap" title="Link to this definition">#</a></dt>
-<dd><p>Processes a GeoTIFF file in overlapping blocks and applies a series of
-transformations for terrain generalization.</p>
-<p class="rubric" id="id25">Parameters</p>
+<dt class="sig sig-object py" id="dem_lic.utils.lic_extended.process_geotiff_in_block_with_overlap">
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">process_geotiff_in_block_with_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MNT_input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.process_geotiff_in_block_with_overlap" title="Link to this definition">#</a></dt>
+<dd><p>Processes a GeoTIFF file in overlapping blocks and applies a user-defined processing function.</p>
+<p class="rubric" id="id20">Parameters</p>
 <p>MNT_input_path : str
 Path to the input GeoTIFF file containing the Digital Elevation Model (DEM).
 output_path : str
 Path to the output GeoTIFF file.
-block_size : int
+processing_function : function
+A function that processes a single block. It should accept a block (ndarray), cell size,
+and any additional parameters.
+block_size : int, optional
 Size of non-overlapping blocks (in pixels) to process. Default is 2000.
-overlap : int
+overlap : int, optional
 Size of the overlapping region (in pixels) between adjacent blocks. Default is 20.
-sigma_max : float
-Maximum kernel width for the adaptive Gaussian blur. Default is 5.
-slope_threshold : float
-Threshold for slope to distinguish flat and steep areas. Default is 0.1.
-num_bins : int, optional
-Number of bins for sigma approximation in the adaptive blur. Default is 10.
-min_area : int, optional
-Minimum size (in pixels) for flat areas to be preserved. Default is 100.
-num_steps : int, optional
-Maximum integration length for the LIC algorithm. Default is 5.
-n_iterations : int, optional
-Number of iterations for the LIC algorithm. Default is 5.
-sigma_blur_maxcurv : float, optional
-Gaussian blur parameter for the maximum curvature. Default is 3.
-k : float, optional
-Weighting factor for combining LIC grids. Default is 2.5.</p>
-<p class="rubric" id="id26">Returns</p>
+**kwargs
+Additional arguments passed to <code class="docutils literal notranslate"><span class="pre">processing_function</span></code>.</p>
+<p class="rubric" id="id21">Returns</p>
 <p>None
 The processed output is written directly to the specified GeoTIFF file.</p>
-<p class="rubric" id="id27">Notes</p>
-<ul class="simple">
-<li><p>The function processes the input raster in overlapping blocks to handle large datasets efficiently.</p></li>
-<li><p>Each block undergoes adaptive Gaussian smoothing, binary grid generation, LIC processing,
-and a series of corrections for smooth integration.</p></li>
-<li><p>The overlapping region ensures seamless transitions between adjacent blocks.</p></li>
-</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dem_lic.utils.lic_extended.process_lic_extended">
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">process_lic_extended</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MNT_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_modulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_blur_maxcurv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.process_lic_extended" title="Link to this definition">#</a></dt>
+<dd><p>Processes a single block of a DEM with LIC and generalization techniques.</p>
+<p class="rubric" id="id22">Parameters</p>
+<p>MNT_block : np.ndarray
+The block of the Digital Elevation Model.
+cellsize : float
+Size of the raster cells in meters.
+sigma_max : float
+Maximum kernel width for the adaptive Gaussian blur.
+slope_threshold : float
+Threshold for slope to distinguish flat and steep areas.
+num_bins : int
+Number of bins for sigma approximation in the adaptive blur.
+min_area : int
+Minimum size (in pixels) for flat areas to be preserved.
+num_steps : int
+Maximum integration length for the LIC algorithm.
+sigma_modulated : bool
+If True, sigma is modulated by altitude in LIC processing.
+n_iterations : int
+Number of iterations for the LIC algorithm.
+sigma_blur_maxcurv : float
+Gaussian blur parameter for maximum curvature.
+k : float
+Weighting factor for combining LIC grids.</p>
+<p class="rubric" id="id23">Returns</p>
+<p>np.ndarray
+Processed DEM block.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dem_lic.utils.lic_extended.lic_extended_partial">
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.lic_extended.</span></span><span class="sig-name descname"><span class="pre">lic_extended_partial</span></span><a class="headerlink" href="#dem_lic.utils.lic_extended.lic_extended_partial" title="Link to this definition">#</a></dt>
+<dd><p>‘partial(…)’</p>
 </dd></dl>
 
 </section>
@@ -603,12 +624,14 @@ and a series of corrections for smooth integration.</p></li>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude"><code class="docutils literal notranslate"><span class="pre">extended_lic_weighted_altitude()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.extended_lic_weighted_altitude_lengthModulated"><code class="docutils literal notranslate"><span class="pre">extended_lic_weighted_altitude_lengthModulated()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.LIC_iterations"><code class="docutils literal notranslate"><span class="pre">LIC_iterations()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.correct_flat_area_values"><code class="docutils literal notranslate"><span class="pre">correct_flat_area_values()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.process_geotiff_with_overlap"><code class="docutils literal notranslate"><span class="pre">process_geotiff_with_overlap()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.process_geotiff_in_block_with_overlap"><code class="docutils literal notranslate"><span class="pre">process_geotiff_in_block_with_overlap()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.process_lic_extended"><code class="docutils literal notranslate"><span class="pre">process_lic_extended()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.lic_extended.lic_extended_partial"><code class="docutils literal notranslate"><span class="pre">lic_extended_partial</span></code></a></li>
 </ul>
 </li>
 </ul>

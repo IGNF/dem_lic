@@ -20,7 +20,7 @@ The main entry point for DEM generalization. This function validates inputs, set
 - `output_path` (str): Path to the output GeoTIFF file.
 - `block_size` (int, optional): Size of processing blocks in pixels. Default is 2000.
 - `overlap` (int, optional): Size of the overlapping region between blocks in pixels. Default is 20.
-- Other optional parameters include `sigma_max`, `slope_threshold`, `num_bins`, `min_area`, `num_steps`, `n_iterations`, `sigma_blur_maxcurv`, and `k` for tuning the algorithm.
+- Other optional parameters include `sigma_max`, `slope_threshold`, `num_bins`, `min_area`, `num_steps`, `sigma_modulated`, `n_iterations`, `sigma_blur_maxcurv`, and `k` for tuning the algorithm.
 
 **Example:**
 
@@ -84,23 +84,3 @@ from dem_lic.utils.morpho_dem import fast_adaptive_gaussian_blur
 smoothed_dem = fast_adaptive_gaussian_blur(input_dem, curvature, sigma_max=5.0)
 ```
 
-### Relative Altitude Function
-
-**`morpho_dem.calculate_relative_altitude`**
-
-Computes the relative altitude for each pixel in a DEM, which can be used for further analysis or visualization.
-
-**Parameters:**
-
-- `input_dem` (numpy.ndarray): Input DEM as a NumPy array.
-
-**Returns:**
-
-- `numpy.ndarray`: A raster array of relative altitudes.
-
-**Example:**
-
-```python
-from dem_lic.utils.morpho_dem import calculate_relative_altitude
-
-relative_altitude = calculate_relative_altitude(input_dem)

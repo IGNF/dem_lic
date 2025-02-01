@@ -374,10 +374,11 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">--block_size</span></code> (int): Size of processing blocks in pixels (default: 2000).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--overlap</span></code> (int): Size of the overlap in pixels between blocks (default: 20).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--sigma_max</span></code> (float): Maximum kernel width for the adaptive Gaussian blur (default: 5.0).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--slope_threshold</span></code> (float): Slope threshold for distinguishing flat and steep areas (default: 0.1).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--slope_threshold</span></code> (float): Slope threshold for distinguishing flat and steep areas, in degrees (default: 6).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--num_bins</span></code> (int): Number of bins for sigma approximation (default: 10).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--min_area</span></code> (int): Minimum size of flat areas to preserve, in pixels (default: 100).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--num_steps</span></code> (int): Maximum integration length for the LIC algorithm (default: 5).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sigma_modulated</span></code> (str): Whether altitude weighting is used in the LIC algorithm (true/false) (default: true).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--n_iterations</span></code> (int): Number of LIC iterations (default: 5).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--sigma_blur_maxcurv</span></code> (float): Gaussian blur sigma for maximal curvature (default: 3.0).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--k</span></code> (float): Weighting factor for combining LIC results (default: 2.5).</p></li>

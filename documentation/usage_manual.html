@@ -366,7 +366,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">output_path</span></code> (str): Path to the output GeoTIFF file.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">block_size</span></code> (int, optional): Size of processing blocks in pixels. Default is 2000.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">overlap</span></code> (int, optional): Size of the overlapping region between blocks in pixels. Default is 20.</p></li>
-<li><p>Other optional parameters include <code class="docutils literal notranslate"><span class="pre">sigma_max</span></code>, <code class="docutils literal notranslate"><span class="pre">slope_threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">num_bins</span></code>, <code class="docutils literal notranslate"><span class="pre">min_area</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, <code class="docutils literal notranslate"><span class="pre">n_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">sigma_blur_maxcurv</span></code>, and <code class="docutils literal notranslate"><span class="pre">k</span></code> for tuning the algorithm.</p></li>
+<li><p>Other optional parameters include <code class="docutils literal notranslate"><span class="pre">sigma_max</span></code>, <code class="docutils literal notranslate"><span class="pre">slope_threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">num_bins</span></code>, <code class="docutils literal notranslate"><span class="pre">min_area</span></code>, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>, <code class="docutils literal notranslate"><span class="pre">sigma_modulated</span></code>, <code class="docutils literal notranslate"><span class="pre">n_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">sigma_blur_maxcurv</span></code>, and <code class="docutils literal notranslate"><span class="pre">k</span></code> for tuning the algorithm.</p></li>
 </ul>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dem_lic.main_lic_extended</span><span class="w"> </span><span class="kn">import</span> <span class="n">generalization</span>
@@ -419,25 +419,6 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dem_lic.utils.morpho_dem</span><span class="w"> </span><span class="kn">import</span> <span class="n">fast_adaptive_gaussian_blur</span>
 
 <span class="n">smoothed_dem</span> <span class="o">=</span> <span class="n">fast_adaptive_gaussian_blur</span><span class="p">(</span><span class="n">input_dem</span><span class="p">,</span> <span class="n">curvature</span><span class="p">,</span> <span class="n">sigma_max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="relative-altitude-function">
-<h3>Relative Altitude Function<a class="headerlink" href="#relative-altitude-function" title="Link to this heading">#</a></h3>
-<p><strong><code class="docutils literal notranslate"><span class="pre">morpho_dem.calculate_relative_altitude</span></code></strong></p>
-<p>Computes the relative altitude for each pixel in a DEM, which can be used for further analysis or visualization.</p>
-<p><strong>Parameters:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">input_dem</span></code> (numpy.ndarray): Input DEM as a NumPy array.</p></li>
-</ul>
-<p><strong>Returns:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>: A raster array of relative altitudes.</p></li>
-</ul>
-<p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dem_lic.utils.morpho_dem</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_relative_altitude</span>
-
-<span class="n">relative_altitude</span> <span class="o">=</span> <span class="n">calculate_relative_altitude</span><span class="p">(</span><span class="n">input_dem</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -496,7 +477,6 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalization-function">Generalization Function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximal-curvature-function">Maximal Curvature Function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-blur-function">Adaptive Gaussian Blur Function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-altitude-function">Relative Altitude Function</a></li>
 </ul>
 </li>
 </ul>

@@ -382,10 +382,9 @@ calculated from the DEM.</p></td>
 <td><p>Removes small flat areas from a binary grid by replacing regions smaller
 than the specified threshold with steep areas.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.morpho_dem.calculate_relative_altitude" title="dem_lic.utils.morpho_dem.calculate_relative_altitude"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_altitude</span></code></a></p></td>
-<td><p>Computes a raster of normalized relative altitude values between 0 and 1
-based on local elevation. This is intended to weight the combination
-of ridge enhancement and flat area transition treatments.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dem_lic.utils.morpho_dem.calculate_local_range" title="dem_lic.utils.morpho_dem.calculate_local_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_local_range</span></code></a></p></td>
+<td><p>Computes the altitude range in a window. This is intended to weight the elevation
+of each point in the line integral convolution.</p></td>
 </tr>
 </tbody>
 </table>
@@ -397,15 +396,15 @@ of ridge enhancement and flat area transition treatments.</p></td>
 <dt class="sig sig-object py" id="dem_lic.utils.morpho_dem.calculate_maximal_curvature">
 <span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">calculate_maximal_curvature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.calculate_maximal_curvature" title="Link to this definition">#</a></dt>
 <dd><p>Compute the maximal curvature (k_max) of a DEM using vectorized calculations.</p>
-<p class="rubric" id="id13">Parameters</p>
+<p class="rubric" id="id12">Parameters</p>
 <p>dem : numpy.ndarray
 A 2D array representing the Digital Elevation Model (DEM).
 resolution : float, optional
 The spatial resolution of the DEM (default is 1.0).</p>
-<p class="rubric" id="id14">Returns</p>
+<p class="rubric" id="id13">Returns</p>
 <p>numpy.ndarray
 A 2D array containing the maximal curvature values.</p>
-<p class="rubric" id="id15">Notes</p>
+<p class="rubric" id="id14">Notes</p>
 <p>This function computes the following terms:</p>
 <ul class="simple">
 <li><p>p: dz/dx (first derivative in x direction)</p></li>
@@ -425,7 +424,7 @@ K = (rt - s²) / (1 + p² + q²)²</p>
 <dt class="sig sig-object py" id="dem_lic.utils.morpho_dem.fast_adaptive_gaussian_blur">
 <span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">fast_adaptive_gaussian_blur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curvature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.fast_adaptive_gaussian_blur" title="Link to this definition">#</a></dt>
 <dd><p>Applies a fast adaptive Gaussian blur by grouping pixels into bins based on local curvature values.</p>
-<p class="rubric" id="id16">Parameters</p>
+<p class="rubric" id="id15">Parameters</p>
 <p>grid : numpy.ndarray
 A 2D array representing the Digital Elevation Model (DEM).
 curvature : numpy.ndarray
@@ -436,10 +435,10 @@ sigma_max : float
 The maximum kernel width for the Gaussian blur.
 num_bins : int, optional
 The number of bins used to approximate the sigma values. Default is 10.</p>
-<p class="rubric" id="id17">Returns</p>
+<p class="rubric" id="id16">Returns</p>
 <p>numpy.ndarray
 A 2D array representing the smoothed DEM after applying the adaptive Gaussian blur.</p>
-<p class="rubric" id="id18">Notes</p>
+<p class="rubric" id="id17">Notes</p>
 <p>The function performs the following steps:</p>
 <ol class="arabic simple">
 <li><p>Calculates the sigma value for each pixel based on the local curvature, limited by <code class="docutils literal notranslate"><span class="pre">sigma_max</span></code>.</p></li>
@@ -453,18 +452,20 @@ sharp features like ridges and peaks.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dem_lic.utils.morpho_dem.initialize_flat_steep_grid">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">initialize_flat_steep_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.initialize_flat_steep_grid" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">initialize_flat_steep_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.initialize_flat_steep_grid" title="Link to this definition">#</a></dt>
 <dd><p>Creates a binary grid to distinguish flat and steep areas based on slope
 calculated from the DEM.</p>
-<p class="rubric" id="id19">Parameters</p>
-<p>mnt : numpy.ndarray
+<p class="rubric" id="id18">Parameters</p>
+<p class="rubric" id="id19">mnt : numpy.ndarray
 2D array representing the Digital Elevation Model (DEM).
 slope_threshold : float
-Threshold value for the slope to separate flat areas (0) from steep areas (1).</p>
-<p class="rubric" id="id20">Returns</p>
+Threshold value for the slope to separate flat areas (0) from steep areas (1), in degrees.
+cellsize : float
+The size of the raster cells in meters.
+Returns</p>
 <p>numpy.ndarray
 2D binary array with 0 for flat areas and 1 for steep areas.</p>
-<p class="rubric" id="id21">Notes</p>
+<p class="rubric" id="id20">Notes</p>
 <p>The slope is computed using the first-order derivatives in the x and y directions,
 combined to form the magnitude of the gradient. Areas with a slope below the
 threshold are considered flat, while others are marked as steep.</p>
@@ -475,38 +476,37 @@ threshold are considered flat, while others are marked as steep.</p>
 <span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">remove_small_flat_areas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flat_steep_grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.remove_small_flat_areas" title="Link to this definition">#</a></dt>
 <dd><p>Removes small flat areas from a binary grid by replacing regions smaller
 than the specified threshold with steep areas.</p>
-<p class="rubric" id="id22">Parameters</p>
+<p class="rubric" id="id21">Parameters</p>
 <p>flat_steep_grid : numpy.ndarray
 2D binary array representing the terrain, with 0 for flat areas and 1 for steep areas.
 min_area : int
 Minimum size of flat regions (in pixels) to retain.</p>
-<p class="rubric" id="id23">Returns</p>
+<p class="rubric" id="id22">Returns</p>
 <p>numpy.ndarray
 2D binary array where small flat areas have been replaced with 1 (steep areas).</p>
-<p class="rubric" id="id24">Notes</p>
+<p class="rubric" id="id23">Notes</p>
 <p>Small flat areas are identified as connected regions of 0-values that are smaller
 than <code class="docutils literal notranslate"><span class="pre">min_area</span></code>. These regions are replaced with steep areas (1) in the output grid.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="dem_lic.utils.morpho_dem.calculate_relative_altitude">
-<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">calculate_relative_altitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.calculate_relative_altitude" title="Link to this definition">#</a></dt>
-<dd><p>Computes a raster of normalized relative altitude values between 0 and 1
-based on local elevation. This is intended to weight the combination
-of ridge enhancement and flat area transition treatments.</p>
-<p class="rubric" id="id25">Parameters</p>
+<dt class="sig sig-object py" id="dem_lic.utils.morpho_dem.calculate_local_range">
+<span class="sig-prename descclassname"><span class="pre">dem_lic.utils.morpho_dem.</span></span><span class="sig-name descname"><span class="pre">calculate_local_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dem_lic.utils.morpho_dem.calculate_local_range" title="Link to this definition">#</a></dt>
+<dd><p>Computes the altitude range in a window. This is intended to weight the elevation
+of each point in the line integral convolution.</p>
+<p class="rubric" id="id24">Parameters</p>
 <p>mnt : numpy.ndarray
 2D array representing the Digital Elevation Model (DEM).
-window_size : int, optional
-Size of the window (in pixels) used to compute local maximums and minimums.
-Default is 40.</p>
-<p class="rubric" id="id26">Returns</p>
+steps : int, optional
+Mid size of the window (in pixels) used to compute local maximums and minimums.
+Default is 5.</p>
+<p class="rubric" id="id25">Returns</p>
 <p>numpy.ndarray
-2D array of normalized relative altitude values between 0 and 1.</p>
-<p class="rubric" id="id27">Notes</p>
-<p>The function calculates relative altitude as the difference between the current
-pixel value and the local minimum within a moving window, normalized by the range
-(local maximum - local minimum). Flat areas with no variation are assigned a neutral value of 0.5.</p>
+2D array of local elevation range.</p>
+<p class="rubric" id="id26">Notes</p>
+<p>The function calculates the difference between the local
+maximum value and the local minimum within a moving window
+(local maximum - local minimum).</p>
 </dd></dl>
 
 </section>
@@ -567,7 +567,7 @@ pixel value and the local minimum within a moving window, normalized by the rang
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.morpho_dem.fast_adaptive_gaussian_blur"><code class="docutils literal notranslate"><span class="pre">fast_adaptive_gaussian_blur()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.morpho_dem.initialize_flat_steep_grid"><code class="docutils literal notranslate"><span class="pre">initialize_flat_steep_grid()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.morpho_dem.remove_small_flat_areas"><code class="docutils literal notranslate"><span class="pre">remove_small_flat_areas()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.morpho_dem.calculate_relative_altitude"><code class="docutils literal notranslate"><span class="pre">calculate_relative_altitude()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dem_lic.utils.morpho_dem.calculate_local_range"><code class="docutils literal notranslate"><span class="pre">calculate_local_range()</span></code></a></li>
 </ul>
 </li>
 </ul>
