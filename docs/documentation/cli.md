@@ -28,10 +28,11 @@ The following optional arguments can be used to customize the processing:
 - `--block_size` (int): Size of processing blocks in pixels (default: 2000).
 - `--overlap` (int): Size of the overlap in pixels between blocks (default: 20).
 - `--sigma_max` (float): Maximum kernel width for the adaptive Gaussian blur (default: 5.0).
-- `--slope_threshold` (float): Slope threshold for distinguishing flat and steep areas (default: 0.1).
+- `--slope_threshold` (float): Slope threshold for distinguishing flat and steep areas, in degrees (default: 6).
 - `--num_bins` (int): Number of bins for sigma approximation (default: 10).
 - `--min_area` (int): Minimum size of flat areas to preserve, in pixels (default: 100).
 - `--num_steps` (int): Maximum integration length for the LIC algorithm (default: 5).
+- `--sigma_modulated` (str): Whether altitude weighting is used in the LIC algorithm (true/false) (default: true).
 - `--n_iterations` (int): Number of LIC iterations (default: 5).
 - `--sigma_blur_maxcurv` (float): Gaussian blur sigma for maximal curvature (default: 3.0).
 - `--k` (float): Weighting factor for combining LIC results (default: 2.5).

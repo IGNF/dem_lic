@@ -24,7 +24,7 @@ Full documentation is available at:
 
 This algorithm generalizes Digital Elevation Models (DEMs) by combining adaptive Gaussian blur based on terrain curvature, flat and steep area detection for feature enhancement, and Line Integral Convolution (LIC) to emphasize ridges and key terrain features. Iterative processing ensures improved visual coherence and clarity.
 
-![Exemple of generalization](docs/images/dem_to_generalization_2m.png)
+![Exemple of generalization](docs/images/dem_to_generalization_25m.png)
 
 ## Installation
 
@@ -67,13 +67,13 @@ For detailed usage instructions and a complete list of options, refer to the [CL
 You can also use **dem_lic** directly within your Python scripts. Here is a quick example:
 
 ```python
-from dem_lic.generalization import generalization
+from dem_lic.main_lic_extended import generalization
 
 generalization(
     MNT_input_path="path_to_input_dem.tif",
     output_path="path_to_output_dem.tif",
-    block_size=2000,
-    overlap=20,
+    sigma_max = 2.0,
+    n_iterations = 4,
 )
 ```
 
