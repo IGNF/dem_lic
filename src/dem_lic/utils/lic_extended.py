@@ -22,15 +22,15 @@ from functools import partial
 from dem_lic.utils.morpho_dem import (
     calculate_maximal_curvature,
     fast_adaptive_gaussian_blur,
-    calculate_local_range,
     initialize_flat_steep_grid,
     remove_small_flat_areas,
 )
 
 
+
+
 def extended_lic_weighted_altitude_lengthModulated(
     grid: np.ndarray,
-    local_range_altitude: np.ndarray,
     cellsize: float,
     f: np.ndarray,
     num_steps: int,
@@ -44,10 +44,6 @@ def extended_lic_weighted_altitude_lengthModulated(
     ----------
     grid : np.ndarray
         A 2D array representing the Digital Elevation Model (DEM).
-    local_range_altitude : np.ndarray
-        A 2D array (same shape as `grid`) giving the local altitude range (e.g., 
-        max-min in a neighborhood) for each pixel. Used to normalize the difference 
-        in elevation along the integration line.
     cellsize : float
         The size of each raster cell in meters.
     f : np.ndarray
@@ -65,18 +61,7 @@ def extended_lic_weighted_altitude_lengthModulated(
         The DEM after the weighted LIC processing, where ridges are accentuated
         by decreasing the Gaussian kernel's sigma for portions that lie above
         the starting pixel's altitude.
-    
-    Notes
-    -----
-    1. We perform two passes: forward and backward along the gradient vectors.
-    2. The number of steps each pixel can take in each pass is `round(f[i,j] * num_steps)`.
-    3. A variable Gaussian kernel is computed at each step. The difference 
-       in altitude (dh) between the current position and the pixel's origin 
-       is normalized by the local altitude range, and used to reduce sigma 
-       for higher (amont) portions.
-    4. The final values are normalized by the sum of the Gaussian weights.
     """
-
 
     # --- 0) Initial copies and shapes
     src = grid.copy()
@@ -85,124 +70,122 @@ def extended_lic_weighted_altitude_lengthModulated(
     # The altitude of origin for each pixel (to compare with visited altitudes).
     start_alt = src.copy()
 
-    # local_range_altitude should be > 0 to avoid division by zero
-    local_range_altitude = np.maximum(local_range_altitude, 1e-6)
-
     # --- 1) Compute the local number of steps for each pixel from f
-    # Clip f between [0, 1]
     f = np.clip(f, 0.0, 1.0)
-    # local_steps is how many steps each pixel can do, at most
     local_steps = np.round(f * num_steps).astype(int)
     max_steps = np.max(local_steps)
 
-    # We'll keep track of "active" pixels that still have steps left
-    # (we reset this mask for each forward/backward pass)
-    active_cells = np.ones((H, W), dtype=bool)
-
     # --- 2) Compute normalized gradients (vi, vj)
     DS = 0.5  # Integration speed (distance in pixel units per step)
-    vi, vj = np.gradient(src, cellsize)  # partial derivatives
+    vi, vj = np.gradient(src, cellsize)  # Partial derivatives
 
-    # Magnitude (avoid /0)
+    # Magnitude (avoid division by zero)
     mag = np.hypot(vi, vj)
     zero_mask = (mag == 0)
     mag[zero_mask] = 1.0
     mag *= (1.0 / DS)
 
-    # Normalize
+    # Normalize gradients
     vi /= mag
     vj /= mag
 
-    # --- 3) Prepare accumulators
-    result = np.zeros_like(src, dtype=float)    # sum of weighted alt
-    weights_sum = np.zeros_like(src, dtype=float)  # sum of weights
+    # --- 3) Pass 1: Compute range along each integration line
+    range_altitude = np.zeros_like(src, dtype=float)
 
-    # We'll create coordinate grids for each pixel
-    i_coords, j_coords = np.mgrid[:H, :W]  # shape (H, W)
-
-    # We define a base sigma
-    sigma_base = np.sqrt((num_steps**2 - 1) / 12.0)
-
-    # --- 4) We'll do two passes: forward and backward
     for pass_id in range(2):
-        # For the second pass, we invert the gradients
         if pass_id == 1:
             vi = -vi
             vj = -vj
 
-        # We also reset the local steps array for this pass, 
-        # because each pixel can do "f * num_steps" steps in forward 
-        # and again in backward.
         current_steps = local_steps.copy()
+        active_cells = np.ones((H, W), dtype=bool)
 
-        # Active mask resets
-        active_cells[:] = True
+        fi, fj = np.mgrid[:H, :W].astype(float)
+        min_alt = start_alt.copy()
+        max_alt = start_alt.copy()
 
-        # We'll keep floating coords to track the position of each pixel
-        fi = i_coords.astype(float)
-        fj = j_coords.astype(float)
-
-        # --- 4.1) For each step in [0..max_steps-1], 
-        #          but we skip if no pixel can still move
         for step_idx in range(max_steps):
             if not np.any(active_cells):
                 break
 
-            # Update floating coords only for active pixels
             fi[active_cells] += vi[active_cells]
             fj[active_cells] += vj[active_cells]
 
-            # Convert to integer indices (clip to bounds)
             pi = np.clip(fi.astype(int), 0, H - 1)
             pj = np.clip(fj.astype(int), 0, W - 1)
 
-            # --- 4.2) Compute the difference in altitude 
-            #    (current position altitude - origin altitude).
-            #    shape( H, W )
-            #    But for each pixel (i,j), the "origin altitude" is start_alt[i,j].
-            dh = src[pi, pj] - start_alt[i_coords, j_coords]
+            # Update min and max altitude along the line
+            min_alt = np.minimum(min_alt, src[pi, pj])
+            max_alt = np.maximum(max_alt, src[pi, pj])
 
-            # --- 4.3) Normalize dh by local_range_altitude for the origin pixel
-            range_val = local_range_altitude[i_coords, j_coords]
-            # A linear factor:  f_alt = 1 - (dh / range_val)
-            # => if dh>0 => factor < 1 => reduces sigma
-            # => if dh<0 => factor>1 => might increase sigma 
-            if sigma_modulated:
-                f_alt = 1.0 - (dh / range_val)
-                f_alt = np.clip(f_alt, 0.0, 1.0)
-            
-            else:
-                f_alt = np.ones_like(dh)
+            # Update range altitude for each pixel
+            range_altitude = np.maximum(range_altitude, max_alt - min_alt)
 
-            # --- 4.4) Adjust sigma accordingly
-            sigma_adjusted = np.maximum(sigma_base * f_alt, 1e-6)
-
-            # The distance from the center in pixel units
-            distance = step_idx * DS
-
-            # Gaussian weight
-            weight = np.exp(-(distance**2) / (2 * sigma_adjusted**2))
-
-            # --- 4.5) Accumulate results for active pixels
-            # Add weighted altitude
-            result[active_cells] += weight[active_cells] * src[pi[active_cells], pj[active_cells]]
-            # Add to weights
-            weights_sum[active_cells] += weight[active_cells]
-
-            # --- 4.6) Decrement local steps for active pixels, 
-            # then update the active mask
             current_steps[active_cells] -= 1
             active_cells = (current_steps > 0)
 
-    # --- 5) Normalize final result to get the average
+    range_altitude = np.maximum(range_altitude, 1e-6)  # Avoid division by zero
+
+    # --- 4) Pass 2: Apply LIC with range-based modulation
+    result = np.zeros_like(src, dtype=float)
+    weights_sum = np.zeros_like(src, dtype=float)
+
+    sigma_base = np.sqrt((num_steps**2 - 1) / 12.0)
+
+    for pass_id in range(2):
+        if pass_id == 1:
+            vi = -vi
+            vj = -vj
+
+        current_steps = local_steps.copy()
+        active_cells = np.ones((H, W), dtype=bool)
+
+        fi, fj = np.mgrid[:H, :W].astype(float)
+
+        for step_idx in range(max_steps):
+            if not np.any(active_cells):
+                break
+
+            fi[active_cells] += vi[active_cells]
+            fj[active_cells] += vj[active_cells]
+
+            pi = np.clip(fi.astype(int), 0, H - 1)
+            pj = np.clip(fj.astype(int), 0, W - 1)
+
+            dh = src[pi, pj] - start_alt  # Compute altitude difference
+
+            # Normalize dh by range along the integration line
+            if sigma_modulated:
+                f_alt = 1.0 - (dh / range_altitude)
+                f_alt = np.clip(f_alt, 0.0, 1.0)
+            else:
+                f_alt = np.ones_like(dh)
+
+            # Adjust sigma accordingly
+            sigma_adjusted = np.maximum(sigma_base * f_alt, 1e-6)
+
+            # Compute Gaussian weight
+            distance = step_idx * DS
+            weight = np.exp(-(distance**2) / (2 * sigma_adjusted**2))
+
+            # Accumulate weighted values
+            result[active_cells] += weight[active_cells] * src[pi[active_cells], pj[active_cells]]
+            weights_sum[active_cells] += weight[active_cells]
+
+            current_steps[active_cells] -= 1
+            active_cells = (current_steps > 0)
+
+    # --- 5) Normalize final result
     np.divide(result, np.maximum(weights_sum, 1e-12), out=result)
 
     return result
 
 
+
+
 def LIC_iterations(
     grid: np.ndarray,
-    local_range_altitude: np.ndarray,
+    # local_range_altitude: np.ndarray,
     cellsize: float,
     f: np.ndarray,
     num_steps: int,
@@ -218,8 +201,8 @@ def LIC_iterations(
     ----------
     grid : numpy.ndarray
         2D array representing the input Digital Elevation Model (DEM).
-    local_range_altitude : numpy ndarray
-        2D array of the range of elevation in a windows centered on each point
+    # local_range_altitude : numpy ndarray
+    #     2D array of the range of elevation in a windows centered on each point
     cellsize : float
         The spatial resolution of the DEM (in meters).
     f : numpy.ndarray
@@ -254,7 +237,7 @@ def LIC_iterations(
 
         # Step 1: Compute a modulated LIC
         filtered_grid = extended_lic_weighted_altitude_lengthModulated(
-            grid, local_range_altitude, cellsize, f, num_steps, sigma_modulated
+            grid, cellsize, f, num_steps, sigma_modulated
         )
 
         # Step 2: Calculate maximal curvature of the filtered grid
@@ -469,9 +452,6 @@ def process_lic_extended(
         MNT_block, curvature_block, cellsize, sigma_max, num_bins
     )
 
-    # Calculate local altitude range
-    local_range_altitude_block = calculate_local_range(MNT_blurred_block, steps=num_steps)
-
     # Generate binary grid for flat/steep areas
     flat_steep_grid_block = initialize_flat_steep_grid(MNT_blurred_block, slope_threshold, cellsize)
 
@@ -487,7 +467,6 @@ def process_lic_extended(
     # Perform multi-pass LIC processing
     processed_block = LIC_iterations(
         MNT_blurred_block,
-        local_range_altitude_block,
         cellsize,
         corrected_f,
         num_steps,
@@ -522,12 +501,9 @@ if __name__ == "__main__":
 
 
     # File paths
-    MNT_input_path = "../../../../QGIS/out/Zone_O1_Christophe_Oisans_2021_MNTLHD_extrait4km.tif"
-    # MNT_input_path = "../../../../zones_test/Zone_O1_St_Christophe_en_Oisans/bdaltiv2/Zone_O1_Christophe_Oisans_BDALTIV2.tif"
+    MNT_input_path = ""
+    LIC_complete_output_path = ""
     
-    name_file = MNT_input_path.split("/")[-1][:-4]
-    LIC_complete_output_path = f"../../../../out_scripts/{name_file}_article.tif"
-    # LIC_complete_output_path = "../../../../out_scripts/Zone_O1_Christophe_Oisans_BDALTIV2_article.tif"
     
     # Call the processing function
     process_geotiff_in_block_with_overlap(
