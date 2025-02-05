@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src'))
+sys.path.insert(0, os.path.abspath('../src/dem_lic/utils'))
 
 
 project = 'dem_lic'
@@ -19,28 +19,25 @@ release = '1.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "autodoc2",
-    # "sphinx.ext.napoleon",
+    # "autodoc2",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
     # "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "myst_parser",
 ]
 
-autodoc2_render_plugin = "myst"
-
-autodoc2_packages = [
-    "../src/dem_lic",  
-]
+add_module_names = False
 
 
 # autodoc_default_options = {
 #     "members": True,
 #     "undoc-members": False,
-#     "show-inheritance": True,
-#     "inherited-members": True,
-#     "special-members": "__init__",
-#     "exclude-members": "__weakref__",
+#     "show-inheritance": False,
+#     "imported-members": False
 # }
+
 
 # napoleon_use_param = True
 # napoleon_google_docstring = True
