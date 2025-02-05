@@ -1,3 +1,12 @@
+---
+myst:
+  html_meta:
+    "description lang=en": |
+      Top-level documentation for DEM Generalization with LIC, with links to the rest
+      of the site..
+html_theme.sidebar_secondary.remove: true
+---
+
 # Welcome to dem_lic's documentation!
 
 Explore the documentation for the **dem_lic** package, including the command-line interface, user manual, and detailed API reference.
@@ -6,7 +15,7 @@ Explore the documentation for the **dem_lic** package, including the command-lin
 :maxdepth: 1
 :hidden:
 
-USer Guide <documentation>
+User Guide <documentation>
 API reference <reference/index>
 ```
 
