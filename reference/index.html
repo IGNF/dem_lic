@@ -41,10 +41,10 @@
     <script src="../_static/documentation_options.js?v=f2a433a1"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'apidocs/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="dem_lic" href="dem_lic/dem_lic.html" />
+    <link rel="next" title="morpho_dem.calculate_maximal_curvature" href="generated/morpho_dem.calculate_maximal_curvature.html" />
     <link rel="prev" title="User Manual" href="../documentation/usage_manual.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -283,16 +283,15 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="dem_lic/dem_lic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="dem_lic/dem_lic.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic/dem_lic.utils.lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.lic_extended</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic/dem_lic.utils.morpho_dem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.morpho_dem</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/morpho_dem.calculate_maximal_curvature.html">morpho_dem.calculate_maximal_curvature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/morpho_dem.fast_adaptive_gaussian_blur.html">morpho_dem.fast_adaptive_gaussian_blur</a></li>
 </ul>
-</details></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic/dem_lic.main_lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.main_lic_extended</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic/dem_lic.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.cli</span></code></a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generated/lic_extended.extended_lic_weighted_altitude_lengthModulated.html">lic_extended.extended_lic_weighted_altitude_lengthModulated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/lic_extended.process_lic_extended.html">lic_extended.process_lic_extended</a></li>
 </ul>
-</details></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generated/lic_extended.process_geotiff_in_block_with_overlap.html">lic_extended.process_geotiff_in_block_with_overlap</a></li>
 </ul>
 </div>
 </nav></div>
@@ -352,27 +351,46 @@
                   
   <section id="api-reference">
 <h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
-<p>This page contains auto-generated API reference documentation <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dem_lic/dem_lic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic/dem_lic.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic/dem_lic.utils.lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.lic_extended</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic/dem_lic.utils.morpho_dem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.morpho_dem</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic/dem_lic.main_lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.main_lic_extended</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic/dem_lic.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.cli</span></code></a></li>
-</ul>
-</li>
-</ul>
+<p>Documentation of the APIs located in the dem_lic.utils folder</p>
+<section id="geomorphometry-functions">
+<h2>Geomorphometry functions<a class="headerlink" href="#geomorphometry-functions" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/morpho_dem.calculate_maximal_curvature.html#morpho_dem.calculate_maximal_curvature" title="morpho_dem.calculate_maximal_curvature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">morpho_dem.calculate_maximal_curvature</span></code></a></p></td>
+<td><p>Compute the maximal curvature (k_max) of a DEM using vectorized calculations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/morpho_dem.fast_adaptive_gaussian_blur.html#morpho_dem.fast_adaptive_gaussian_blur" title="morpho_dem.fast_adaptive_gaussian_blur"><code class="xref py py-obj docutils literal notranslate"><span class="pre">morpho_dem.fast_adaptive_gaussian_blur</span></code></a></p></td>
+<td><p>Applies a fast adaptive Gaussian blur by grouping pixels into bins based on local curvature values.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="f1" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Created with <a class="reference external" href="https://github.com/chrisjsewell/sphinx-autodoc2">sphinx-autodoc2</a></p>
-</aside>
-</aside>
+</section>
+<section id="line-integral-convolution">
+<h2>Line integral convolution<a class="headerlink" href="#line-integral-convolution" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lic_extended.extended_lic_weighted_altitude_lengthModulated.html#lic_extended.extended_lic_weighted_altitude_lengthModulated" title="lic_extended.extended_lic_weighted_altitude_lengthModulated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lic_extended.extended_lic_weighted_altitude_lengthModulated</span></code></a></p></td>
+<td><p>Applies a Line Integral Convolution (LIC) with a dynamically modulated integration length (based on f) and a variable Gaussian kernel that reduces the influence of higher terrain along the line of integration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/lic_extended.process_lic_extended.html#lic_extended.process_lic_extended" title="lic_extended.process_lic_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lic_extended.process_lic_extended</span></code></a></p></td>
+<td><p>Processes a single block of a DEM with LIC and generalization techniques.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="block-processing">
+<h2>block processing<a class="headerlink" href="#block-processing" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/lic_extended.process_geotiff_in_block_with_overlap.html#lic_extended.process_geotiff_in_block_with_overlap" title="lic_extended.process_geotiff_in_block_with_overlap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lic_extended.process_geotiff_in_block_with_overlap</span></code></a></p></td>
+<td><p>Processes a GeoTIFF file in overlapping blocks and applies a user-defined processing function.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 
 
@@ -395,11 +413,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="dem_lic/dem_lic.html"
+       href="generated/morpho_dem.calculate_maximal_curvature.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></p>
+        <p class="prev-next-title">morpho_dem.calculate_maximal_curvature</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -415,10 +433,24 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geomorphometry-functions">Geomorphometry functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-integral-convolution">Line integral convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-processing">block processing</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/apidocs/index.rst.txt"
+      <li><a href="../_sources/reference/index.md.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

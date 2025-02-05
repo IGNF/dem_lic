@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>dem_lic &#8212; dem_lic 1.0 documentation</title>
+    <title>lic_extended.process_lic_extended &#8212; dem_lic 1.0 documentation</title>
   
   
   
@@ -41,11 +41,11 @@
     <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'apidocs/dem_lic/dem_lic';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/generated/lic_extended.process_lic_extended';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="dem_lic.utils" href="dem_lic.utils.html" />
-    <link rel="prev" title="API Reference" href="../index.html" />
+    <link rel="next" title="lic_extended.process_geotiff_in_block_with_overlap" href="lic_extended.process_geotiff_in_block_with_overlap.html" />
+    <link rel="prev" title="lic_extended.extended_lic_weighted_altitude_lengthModulated" href="lic_extended.extended_lic_weighted_altitude_lengthModulated.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -282,17 +282,16 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="dem_lic.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic.utils.lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.lic_extended</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="dem_lic.utils.morpho_dem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.morpho_dem</span></code></a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="morpho_dem.calculate_maximal_curvature.html">morpho_dem.calculate_maximal_curvature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="morpho_dem.fast_adaptive_gaussian_blur.html">morpho_dem.fast_adaptive_gaussian_blur</a></li>
 </ul>
-</details></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic.main_lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.main_lic_extended</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.cli</span></code></a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lic_extended.extended_lic_weighted_altitude_lengthModulated.html">lic_extended.extended_lic_weighted_altitude_lengthModulated</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">lic_extended.process_lic_extended</a></li>
 </ul>
-</details></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lic_extended.process_geotiff_in_block_with_overlap.html">lic_extended.process_geotiff_in_block_with_overlap</a></li>
 </ul>
 </div>
 </nav></div>
@@ -336,7 +335,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">API Reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">lic_extended.process_lic_extended</span></li>
   </ul>
 </nav>
 </div>
@@ -353,29 +352,37 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-dem_lic">
-<span id="dem-lic"></span><h1><a class="reference internal" href="#module-dem_lic" title="dem_lic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic</span></code></a><a class="headerlink" href="#module-dem_lic" title="Link to this heading">#</a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dem_lic.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic.utils.lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.lic_extended</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="dem_lic.utils.morpho_dem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils.morpho_dem</span></code></a></li>
+  <section id="lic-extended-process-lic-extended">
+<h1>lic_extended.process_lic_extended<a class="headerlink" href="#lic-extended-process-lic-extended" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="lic_extended.process_lic_extended">
+<span class="sig-name descname"><span class="pre">process_lic_extended</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MNT_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_modulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_blur_maxcurv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/lic_extended.html#process_lic_extended"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lic_extended.process_lic_extended" title="Link to this definition">#</a></dt>
+<dd><p>Processes a single block of a DEM with LIC and generalization techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>MNT_block</strong> (<em>np.ndarray</em>) – The block of the Digital Elevation Model.</p></li>
+<li><p><strong>cellsize</strong> (<em>float</em>) – Size of the raster cells in meters.</p></li>
+<li><p><strong>sigma_max</strong> (<em>float</em>) – Maximum kernel width for the adaptive Gaussian blur.</p></li>
+<li><p><strong>slope_threshold</strong> (<em>float</em>) – Threshold for slope to distinguish flat and steep areas.</p></li>
+<li><p><strong>num_bins</strong> (<em>int</em>) – Number of bins for sigma approximation in the adaptive blur.</p></li>
+<li><p><strong>min_area</strong> (<em>int</em>) – Minimum size (in pixels) for flat areas to be preserved.</p></li>
+<li><p><strong>num_steps</strong> (<em>int</em>) – Maximum integration length for the LIC algorithm.</p></li>
+<li><p><strong>sigma_modulated</strong> (<em>bool</em>) – If True, sigma is modulated by altitude in LIC processing.</p></li>
+<li><p><strong>n_iterations</strong> (<em>int</em>) – Number of iterations for the LIC algorithm.</p></li>
+<li><p><strong>sigma_blur_maxcurv</strong> (<em>float</em>) – Gaussian blur parameter for maximum curvature.</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – Weighting factor for combining LIC grids.</p></li>
 </ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dem_lic.main_lic_extended.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.main_lic_extended</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="dem_lic.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.cli</span></code></a></li>
-</ul>
-</div>
-</section>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Processed DEM block.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -389,20 +396,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="lic_extended.extended_lic_weighted_altitude_lengthModulated.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">API Reference</p>
+        <p class="prev-next-title">lic_extended.extended_lic_weighted_altitude_lengthModulated</p>
       </div>
     </a>
     <a class="right-next"
-       href="dem_lic.utils.html"
+       href="lic_extended.process_geotiff_in_block_with_overlap.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dem_lic.utils</span></code></p>
+        <p class="prev-next-title">lic_extended.process_geotiff_in_block_with_overlap</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -425,8 +432,7 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lic_extended.process_lic_extended"><code class="docutils literal notranslate"><span class="pre">process_lic_extended()</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -434,7 +440,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/apidocs/dem_lic/dem_lic.md.txt"
+      <li><a href="../../_sources/reference/generated/lic_extended.process_lic_extended.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

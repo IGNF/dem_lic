@@ -8,7 +8,7 @@ Explore the documentation for the **dem_lic** package, including the command-lin
 :caption: Contents:
 
 documentation
-apidocs/index
+reference/index
 ```
 [Methodological Documentation: DEM Generalization with Line Integral Convolution](./_static/Methodological_Documentation_DEM_Generalization_with_Line_Integral_Convolution.pdf) 📄
 
