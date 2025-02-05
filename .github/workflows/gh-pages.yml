@@ -36,7 +36,6 @@ jobs:
           pip3 install sphinx
           pip3 install numpydoc
           pip3 install myst-parser
-          pip3 install sphinx-autodoc2
 
       - name: "Install dem lic library"
         run: |

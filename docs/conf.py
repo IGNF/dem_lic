@@ -19,34 +19,15 @@ release = '1.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    # "autodoc2",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    # "sphinx.ext.viewcode",
+    "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "myst_parser",
 ]
 
 add_module_names = False
-
-
-# autodoc_default_options = {
-#     "members": True,
-#     "undoc-members": False,
-#     "show-inheritance": False,
-#     "imported-members": False
-# }
-
-
-# napoleon_use_param = True
-# napoleon_google_docstring = True
-# napoleon_numpy_docstring = True
-# napoleon_include_init_with_doc = True
-# napoleon_include_private_with_doc = False
-# napoleon_include_special_with_doc = True
-
-
 
 
 templates_path = ['_templates']
