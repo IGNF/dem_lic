@@ -12,8 +12,8 @@ Documentation of the APIs located in the dem_lic.utils folder
     :nosignatures:
     :toctree: generated
 
-    calculate_maximal_curvature
     fast_adaptive_gaussian_blur
+    calculate_maximal_curvature
 ```
 
 
