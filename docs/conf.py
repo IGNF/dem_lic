@@ -55,4 +55,18 @@ html_theme_options = {
             "icon": "fab fa-github",
         },
     ],
+    "logo": {
+        "text": "DEM Gen"
+    },
+    "use_edit_page_button": True,
+    "show_toc_level": 1,
+    # [left, content, right] For testing that the navbar items align properly
+    "navbar_align": "content"
+}
+
+html_context = {
+    "github_user": "ESaint-Denis",
+    "github_repo": "dem_lic",
+    "github_version": "main",
+    "doc_path": "docs",
 }

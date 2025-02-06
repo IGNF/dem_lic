@@ -15,7 +15,6 @@ venv/
 dist/
 build/
 _build/
-_templates/
 
 
 # Logs
@@ -26,6 +25,8 @@ _templates/
 docs/source/
 Makefile
 make.bat
+docs/reference/generated/*
+docs/html/*
 
 # === OS / IDE-specific files ===
 # macOS

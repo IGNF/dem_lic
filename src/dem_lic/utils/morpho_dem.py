@@ -12,7 +12,7 @@ def calculate_maximal_curvature(
         dem: np.ndarray,
         resolution: float = 1
 ) -> np.ndarray:
-    """Compute the maximal curvature (k_max) of a DEM using vectorized calculations.
+    """Compute the maximal curvature (k_max) of a DEM using vectorized calculations
 
     Parameters
     ----------
@@ -29,14 +29,16 @@ def calculate_maximal_curvature(
     Notes
     -----
     This function computes the following terms:
-    - p: dz/dx (first derivative in x direction)
-    - q: dz/dy (first derivative in y direction)
-    - r: d²z/dx² (second derivative in x direction)
-    - t: d²z/dy² (second derivative in y direction)
-    - s: d²z/dxdy (second mixed derivative)
+    
+    - **p**: (first derivative in x direction) :math:`\\frac{\\partial z}{\\partial x}`
+    - **q**: dz/dy (first derivative in y direction)
+    - **r**: d²z/dx² (second derivative in x direction)
+    - **t**: d²z/dy² (second derivative in y direction)
+    - **s**: d²z/dxdy (second mixed derivative)
 
     The maximal curvature is then computed as:
     k_max = H + sqrt(H² - K)
+    
     where:
     H = -((1 + q²)r - 2pqs + (1 + p²)t) / (2 * (1 + p² + q²)^(3/2))
     K = (rt - s²) / (1 + p² + q²)²
@@ -78,7 +80,11 @@ def fast_adaptive_gaussian_blur(
     sigma_max: float,
     num_bins: int = 10,
 ) -> np.ndarray:
-    """Applies a fast adaptive Gaussian blur by grouping pixels into bins based on local curvature values.
+    """Compute a fast approximation of adaptive Gaussian blur.
+    
+    the computation is done bu grouping pixels into bins based on local curvature values,
+    follow by an interpolation between bin value to approximate an exact adaptative
+    gaussian blur.
 
     Parameters
     ----------
@@ -101,6 +107,7 @@ def fast_adaptive_gaussian_blur(
     Notes
     -----
     The function performs the following steps:
+
     1. Calculates the sigma value for each pixel based on the local curvature, limited by `sigma_max`.
     2. Groups pixels into bins according to their sigma values.
     3. Applies a Gaussian blur for each bin using a fixed sigma value.
@@ -159,8 +166,9 @@ def initialize_flat_steep_grid(
         slope_threshold: float,
         cellsize: float
 ) -> np.ndarray:
-    """Creates a binary grid to distinguish flat and steep areas based on slope
-    calculated from the DEM.
+    """Creates a binary grid to distinguish flat and steep areas 
+    
+    The computation i based on slope calculated from the input DEM.
 
     Parameters
     ----------
@@ -200,8 +208,8 @@ def remove_small_flat_areas(
         flat_steep_grid: np.ndarray,
         min_area: int
 ) -> np.ndarray:
-    """Removes small flat areas from a binary grid by replacing regions smaller
-    than the specified threshold with steep areas.
+    """Removes small flat areas from a binary grid 
+    
 
     Parameters
     ----------

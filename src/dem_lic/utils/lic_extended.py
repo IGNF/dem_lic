@@ -36,8 +36,10 @@ def extended_lic_weighted_altitude_lengthModulated(
     num_steps: int,
     sigma_modulated: bool = True
 ) -> np.ndarray:
-    """Applies a Line Integral Convolution (LIC) with a dynamically modulated integration
-    length (based on f) and a variable Gaussian kernel that reduces the influence of
+    """Applies a Line Integral Convolution (LIC) with options
+    
+    With a dynamically modulated integration length (based on f) and a
+    variable Gaussian kernel that reduces the influence of
     higher terrain along the line of integration.
     
     Parameters
@@ -194,8 +196,9 @@ def LIC_iterations(
     sigma: float,
     k: float,
 ) -> np.ndarray:
-    """Perform multiple iterations of the Line Integral Convolution (LIC) method to generalize a DEM
-    by combining smoothing and feature enhancement.
+    """Perform multiple iterations of the Line Integral Convolution (LIC) 
+    
+    method used to generalize a DEM by combining smoothing and feature enhancement.
 
     Parameters
     ----------
@@ -227,6 +230,7 @@ def LIC_iterations(
     Notes
     -----
     This function performs the following steps for each iteration:
+
     1. Computes a modulated LIC 
     2. Calculates the maximal curvature of the resulting grid.
     3. Applies Gaussian smoothing to the curvature.
