@@ -77,6 +77,16 @@ generalization(
 )
 ```
 
+## Input DEM requirements
+
+The input Digital Elevation Model must:
+
+- Be a **GeoTIFF** file.
+- Use a **projected coordinate system with metric units** (e.g., UTM, Lambert 93).  
+Do **not** use a geographic CRS with degrees (such as WGS84 / EPSG:4326), as the algorithm relies on metric distances for slope, curvature, and LIC integration lengths.  
+Using degrees will result in **incorrect and unusable outputs**.
+
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE.TXT file for details.
