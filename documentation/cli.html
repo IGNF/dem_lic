@@ -385,6 +385,16 @@
 </ul>
 </section>
 </section>
+<section id="input-dem-requirements">
+<h2>Input DEM requirements<a class="headerlink" href="#input-dem-requirements" title="Link to this heading">#</a></h2>
+<p>The input Digital Elevation Model must:</p>
+<ul class="simple">
+<li><p>Be a <strong>GeoTIFF</strong> file.</p></li>
+<li><p>Use a <strong>projected coordinate system with metric units</strong> (e.g., UTM, Lambert 93).<br />
+Do <strong>not</strong> use a geographic CRS with degrees (such as WGS84 / EPSG:4326), as the algorithm relies on metric distances for slope, curvature, and LIC integration lengths.<br />
+Using degrees will result in <strong>incorrect and unusable outputs</strong>.</p></li>
+</ul>
+</section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <section id="basic-usage">
@@ -476,6 +486,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-arguments">Optional Arguments</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-dem-requirements">Input DEM requirements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic Usage</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-parameters">Custom Parameters</a></li>

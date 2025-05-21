@@ -6,6 +6,15 @@ This user manual provides detailed guidance on using the key functions of the **
 
 The **dem_lic** package offers tools for DEM generalization and processing. The main entry point is the `generalization` function in `main_lic_extended`, which orchestrates the generalization pipeline. Additionally, standalone functions in the `morpho_dem` module allow users to perform specific tasks such as computing maximal curvature or applying selective Gaussian blur.
 
+## Input DEM requirements
+
+The input Digital Elevation Model must:
+
+- Be a **GeoTIFF** file.
+- Use a **projected coordinate system with metric units** (e.g., UTM, Lambert 93).  
+Do **not** use a geographic CRS with degrees (such as WGS84 / EPSG:4326), as the algorithm relies on metric distances for slope, curvature, and LIC integration lengths.  
+Using degrees will result in **incorrect and unusable outputs**.
+
 ## Functions Overview
 
 ### Generalization Function

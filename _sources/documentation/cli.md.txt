@@ -37,6 +37,15 @@ The following optional arguments can be used to customize the processing:
 - `--sigma_blur_maxcurv` (float): Gaussian blur sigma for maximal curvature (default: 3.0).
 - `--k` (float): Weighting factor for combining LIC results (default: 2.5).
 
+## Input DEM requirements
+
+The input Digital Elevation Model must:
+
+- Be a **GeoTIFF** file.
+- Use a **projected coordinate system with metric units** (e.g., UTM, Lambert 93).  
+Do **not** use a geographic CRS with degrees (such as WGS84 / EPSG:4326), as the algorithm relies on metric distances for slope, curvature, and LIC integration lengths.  
+Using degrees will result in **incorrect and unusable outputs**.
+
 ## Examples
 
 ### Basic Usage
