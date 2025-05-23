@@ -88,7 +88,7 @@ def generalization(
     # Check that sigma_max, slope_threshold, sigma_blur_maxcurv, and k are positive floats
     if not isinstance(sigma_max, (int, float)) or sigma_max <= 0:
         raise ValueError("Sigma max must be a positive number.")
-    if not isinstance(slope_threshold, (int, float)) or slope_threshold <= 0:
+    if not isinstance(slope_threshold, (int, float)) or slope_threshold < 0:
         raise ValueError("Slope threshold must be a positive number.")
     if not isinstance(sigma_blur_maxcurv, (int, float)) or sigma_blur_maxcurv <= 0:
         raise ValueError("Sigma blur for maximum curvature must be a positive number.")
@@ -138,8 +138,8 @@ def generalization(
 
 
 if __name__ == "__main__":
-    MNT_input_path = ""
-    LIC_complete_output_path = ""
+    MNT_input_path = "C:\Projets\cretes_talwegs\QGIS\out\elevation_1KMmd_GMTEDmd_metrique_extrait.tif"
+    LIC_complete_output_path = "C:\Projets\cretes_talwegs\out_scripts_test_temp\elevation_1KMmd_GMTEDmd_metrique_extrait_LIC_st0.tif"
 
     
     # Call the processing function
@@ -147,6 +147,7 @@ if __name__ == "__main__":
         MNT_input_path,
         LIC_complete_output_path,
         sigma_max = 2.0,
+        slope_threshold = 0,
         num_steps = 5,
         sigma_modulated= True,
         n_iterations = 4,
