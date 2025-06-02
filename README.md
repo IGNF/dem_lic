@@ -18,7 +18,7 @@ Bernhard Jenny (2021) Terrain generalization with line integral convolution, Car
 
 Full documentation is available at:
 
-[https://esaint-denis.github.io/dem_lic/](https://esaint-denis.github.io/dem_lic/)
+[https://ignf.github.io/dem_lic/](https://ignf.github.io/dem_lic/)
 
 ## What does it do?
 
