@@ -33,7 +33,7 @@ To install the package, clone the repository and install it in editable mode.
 ### HTTP method
 
 ```bash
-git clone https://github.com/ESaint-Denis/dem_lic.git
+git clone https://github.com/IGNF/dem_lic.git
 cd dem_lic
 pip install -e .
 ```
@@ -41,7 +41,7 @@ pip install -e .
 ### SSH method
 
 ```bash
-git clone git@github.com:ESaint-Denis/dem_lic.git
+git clone git@github.com:IGNF/dem_lic.git
 cd dem_lic
 pip install -e .
 ```
