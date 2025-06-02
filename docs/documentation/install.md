@@ -31,7 +31,7 @@ You can install **dem_lic** by cloning the GitHub repository.
 #### HTTP Method
 
 ```bash
-git clone https://github.com/ESaint-Denis/dem_lic.git
+git clone https://github.com/IGNF/dem_lic.git
 cd dem_lic
 pip install -e .
 ```
@@ -39,7 +39,7 @@ pip install -e .
 #### SSH Method
 
 ```bash
-git clone git@github.com:ESaint-Denis/dem_lic.git
+git clone git@github.com:IGNF/dem_lic.git
 cd dem_lic
 pip install -e .
 ```

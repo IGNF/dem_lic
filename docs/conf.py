@@ -51,7 +51,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/ESaint-Denis/dem_lic",
+            "url": "https://github.com/IGNF/dem_lic",
             "icon": "fab fa-github",
         },
     ],
